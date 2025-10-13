@@ -25,16 +25,16 @@ import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 
-export default defineConfig(({ command, mode }) => {
-    const isDev = command === 'serve'; // true when running `npm run dev`
+export default defineConfig(({ command }) => {
+    const isDev = command === 'serve';
 
     return {
         plugins: [
             laravel({
                 input: ['resources/css/app.css', 'resources/js/app.tsx'],
                 ssr: 'resources/js/ssr.tsx',
-                refresh: isDev, // only refresh in dev
-                buildDirectory: 'build', // ensures output goes to public/build
+                refresh: isDev,
+                buildDirectory: 'build', // outputs to public/build
             }),
             react(),
             tailwindcss(),
@@ -43,9 +43,9 @@ export default defineConfig(({ command, mode }) => {
             jsx: 'automatic',
         },
         build: {
-            outDir: 'public/build', // production output folder
-            emptyOutDir: true, // clean folder before build
-            manifest: true, // important: generate manifest.json for Laravel
+            outDir: 'public/build',
+            emptyOutDir: true,
+            manifest: true, // ensures Laravel reads built assets
             rollupOptions: {
                 input: {
                     app: 'resources/js/app.tsx',
@@ -54,12 +54,10 @@ export default defineConfig(({ command, mode }) => {
         },
         server: isDev
             ? {
-                  host: '0.0.0.0', // allows LAN/dev machine access
+                  host: '0.0.0.0', // LAN/dev access
                   strictPort: true,
-                  hmr: {
-                      host: 'localhost', // HMR host
-                  },
+                  hmr: { host: 'localhost' },
               }
-            : undefined, // ignored in production
+            : undefined,
     };
 });
