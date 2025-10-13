@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{-- Dark mode --}}
+    {{-- Dark mode inline script --}}
     <script>
     (function() {
         const appearance = '{{ $appearance ?? "system" }}';
@@ -16,6 +16,7 @@
     })();
     </script>
 
+    {{-- Fallback background for initial load --}}
     <style>
     html {
         background-color: oklch(1 0 0);
@@ -28,15 +29,18 @@
 
     <title inertia>{{ config('app.name', 'Taguig City University') }}</title>
 
+    {{-- Icons --}}
     <link rel="icon" type="image/png" href="/storage/images/tcu.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
-    {{-- Vite --}}
-    @if (app()->environment('local'))
+    {{-- Vite assets --}}
+    @if(app()->environment('local'))
     @viteReactRefresh
     @endif
     @vite([
