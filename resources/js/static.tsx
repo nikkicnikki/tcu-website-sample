@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import '../css/app.css';
 import { initializeTheme } from './hooks/use-appearance';
-import Sample1 from './pages/sample11111';
+import Sample1 from './pages/sample1';
 
 initializeTheme();
 
