@@ -26,6 +26,9 @@ RUN composer install --no-dev --optimize-autoloader
 RUN npm install
 RUN npm run build
 
+# Set correct permissions so Apache can read build files
+RUN chown -R www-data:www-data public/build
+
 # ---------- Laravel optimization ----------
 RUN php artisan config:cache \
     && php artisan route:cache \
