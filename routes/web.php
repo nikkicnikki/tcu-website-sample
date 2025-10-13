@@ -20,6 +20,10 @@ Route::get('/', function () {
     return Inertia::render('sample1');
 });
 
+Route::get('/ping', function () {
+    return 'pong';
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
     // Route::get('dashboard', function () {
     //     return Inertia::render('dashboard');
