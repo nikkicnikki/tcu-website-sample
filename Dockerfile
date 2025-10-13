@@ -78,6 +78,15 @@ RUN php artisan config:cache \
 # ---------- Permissions ----------
 RUN chown -R www-data:www-data storage bootstrap/cache
 
+# ---------- Apache virtual host ----------
+RUN echo '<VirtualHost *:10000>
+    DocumentRoot /var/www/html/public
+    <Directory /var/www/html/public>
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
+
 # ---------- Apache JS module fix ----------
 RUN echo "AddType application/javascript .js" >> /etc/apache2/apache2.conf
 
