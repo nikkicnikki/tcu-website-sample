@@ -93,5 +93,7 @@ RUN echo "AddType application/javascript .js" >> /etc/apache2/apache2.conf
 # ---------- Serve from public ----------
 WORKDIR /var/www/html/public
 
+RUN php artisan --version || echo "Laravel not bootable"
+
 # ---------- Start Apache ----------
 CMD ["apache2-foreground"]
