@@ -6,11 +6,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { UserInfo } from '@/components/user-info';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
-import { logout } from '@/routes';
-import { edit } from '@/routes/profile';
+// import { logout } from '@/routes';
+// import { edit } from '@/routes/profile';
 import { type User } from '@/types';
-import { Link, router } from '@inertiajs/react';
-import { LogOut, Settings } from 'lucide-react';
+import { router } from '@inertiajs/react';
 
 interface UserMenuContentProps {
     user: User;
@@ -34,7 +33,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
-                    <Link
+                    {/* <Link
                         className="block w-full"
                         href={edit()}
                         as="button"
@@ -43,12 +42,12 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                     >
                         <Settings className="mr-2" />
                         Settings
-                    </Link>
+                    </Link> */}
                 </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-                <Link
+                {/* <Link
                     className="block w-full"
                     href={logout()}
                     as="button"
@@ -57,7 +56,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                 >
                     <LogOut className="mr-2" />
                     Log out
-                </Link>
+                </Link> */}
             </DropdownMenuItem>
         </>
     );
