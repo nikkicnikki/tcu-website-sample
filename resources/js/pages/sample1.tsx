@@ -1312,7 +1312,7 @@ export default function Sample1() {
                     playsInline
                     className="absolute left-0 top-0 h-full w-full object-cover"
                 >
-                    <source src="/storage/videos/tcuavp.mp4" type="video/mp4" />
+                    <source src="https://tcu.edu.ph/wp-content/uploads/2024/12/tcuavp.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
 
