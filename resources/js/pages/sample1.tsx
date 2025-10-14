@@ -1012,7 +1012,7 @@ export default function Sample1() {
         >
             <Head title="Taguig City University" />
             {/* progress bar */}
-            <div className="fixed left-0 top-0 z-[60] h-1 w-full bg-gray-200">
+            <div className="fixed top-0 left-0 z-[60] h-1 w-full bg-gray-200">
                 <div
                     className="h-1 bg-red-700 transition-all duration-150"
                     style={{ width: `${scroll}%` }}
@@ -1029,18 +1029,18 @@ export default function Sample1() {
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <div className="underline-offset-9 flex cursor-pointer items-center space-x-1 decoration-2 transition hover:underline">
+                        <div className="flex cursor-pointer items-center space-x-1 decoration-2 underline-offset-9 transition hover:underline">
                             <FaFacebookF className="h-4 w-4 text-white" />
                             <span>Taguig City University</span>
                         </div>
                     </a>
 
-                    <div className="underline-offset-9 flex cursor-pointer items-center space-x-1 decoration-2 transition hover:underline">
+                    <div className="flex cursor-pointer items-center space-x-1 decoration-2 underline-offset-9 transition hover:underline">
                         <FaPhone className="h-4 w-4 text-white" />
                         <span>8635-8300</span>
                     </div>
 
-                    <div className="underline-offset-9 flex cursor-pointer items-center space-x-1 decoration-2 transition hover:underline">
+                    <div className="flex cursor-pointer items-center space-x-1 decoration-2 underline-offset-9 transition hover:underline">
                         <FaMapMarkerAlt className="h-4 w-4 text-white" />
                         <span>
                             Gen. Santos Ave. Central Bicutan, Taguig City
@@ -1101,7 +1101,7 @@ export default function Sample1() {
                         <nav className="hidden space-x-6 lg:flex">
                             <a
                                 href="/"
-                                className="underline-offset-10 text-white decoration-2 hover:underline"
+                                className="text-white decoration-2 underline-offset-10 hover:underline"
                             >
                                 Home
                             </a>
@@ -1114,14 +1114,14 @@ export default function Sample1() {
                                             setOpenAcademics(!openAcademics);
                                             setOpenAdmission(false);
                                         }}
-                                        className="underline-offset-10 text-white decoration-2 hover:underline"
+                                        className="text-white decoration-2 underline-offset-10 hover:underline"
                                     >
                                         Academics ▾
                                     </button>
                                 </a>
 
                                 {openAcademics && (
-                                    <div className="absolute left-0 top-full mt-2 w-72 flex-col bg-white py-2 text-gray-800 shadow-lg">
+                                    <div className="absolute top-full left-0 mt-2 w-72 flex-col bg-white py-2 text-gray-800 shadow-lg">
                                         {colleges.map((college) => (
                                             <a
                                                 key={college.name}
@@ -1145,13 +1145,13 @@ export default function Sample1() {
                                         setOpenAdmission(!openAdmission);
                                         setOpenAcademics(false);
                                     }}
-                                    className="underline-offset-10 text-white decoration-2 hover:underline"
+                                    className="text-white decoration-2 underline-offset-10 hover:underline"
                                 >
                                     Admission ▾
                                 </button>
 
                                 {openAdmission && (
-                                    <div className="absolute left-0 top-full mt-2 w-52 flex-col bg-white py-2 text-gray-800 shadow-lg">
+                                    <div className="absolute top-full left-0 mt-2 w-52 flex-col bg-white py-2 text-gray-800 shadow-lg">
                                         {[
                                             {
                                                 name: 'Freshmen',
@@ -1179,14 +1179,14 @@ export default function Sample1() {
 
                             <a
                                 href="#research"
-                                className="underline-offset-10 text-white decoration-2 hover:underline"
+                                className="text-white decoration-2 underline-offset-10 hover:underline"
                             >
                                 Research
                             </a>
 
                             <a
                                 href="#about"
-                                className="underline-offset-10 text-white decoration-2 hover:underline"
+                                className="text-white decoration-2 underline-offset-10 hover:underline"
                             >
                                 About
                             </a>
@@ -1218,11 +1218,11 @@ export default function Sample1() {
 
                 {/* Mobile Menu */}
                 {menuOpen && (
-                    <div className="top-25 absolute left-0 w-full bg-gradient-to-r from-red-900 to-red-600 text-white shadow-md lg:hidden">
+                    <div className="absolute top-25 left-0 w-full bg-gradient-to-r from-red-900 to-red-600 text-white shadow-md lg:hidden">
                         <nav className="flex flex-col items-start space-y-3 px-6 py-4">
                             <a
                                 href="#home"
-                                className="underline-offset-10 decoration-2 hover:underline"
+                                className="decoration-2 underline-offset-10 hover:underline"
                                 onClick={() => setMenuOpen(false)}
                             >
                                 Home
@@ -1230,10 +1230,10 @@ export default function Sample1() {
 
                             {/* Mobile Academics Dropdown (Dynamic) */}
                             <details className="w-full">
-                                <summary className="underline-offset-10 cursor-pointer decoration-2 hover:underline">
+                                <summary className="cursor-pointer decoration-2 underline-offset-10 hover:underline">
                                     Academics
                                 </summary>
-                                <div className="ml-4 mt-2 flex flex-col space-y-1 text-sm">
+                                <div className="mt-2 ml-4 flex flex-col space-y-1 text-sm">
                                     {colleges.map((college) => (
                                         <a
                                             key={college.name}
@@ -1249,14 +1249,14 @@ export default function Sample1() {
 
                             <a
                                 href="#admission"
-                                className="underline-offset-10 decoration-2 hover:underline"
+                                className="decoration-2 underline-offset-10 hover:underline"
                                 onClick={() => setMenuOpen(false)}
                             >
                                 Admission
                             </a>
                             <a
                                 href="#research"
-                                className="underline-offset-10 decoration-2 hover:underline"
+                                className="decoration-2 underline-offset-10 hover:underline"
                                 onClick={() => setMenuOpen(false)}
                             >
                                 Research
@@ -1264,7 +1264,7 @@ export default function Sample1() {
 
                             <a
                                 href="#about"
-                                className="underline-offset-10 decoration-2 hover:underline"
+                                className="decoration-2 underline-offset-10 hover:underline"
                                 onClick={() => setMenuOpen(false)}
                             >
                                 About
@@ -1310,9 +1310,12 @@ export default function Sample1() {
                     loop
                     muted
                     playsInline
-                    className="absolute left-0 top-0 h-full w-full object-cover"
+                    className="absolute top-0 left-0 h-full w-full object-cover"
                 >
-                    <source src="/storage/videos/tcuavp.mp4" type="video/mp4" />
+                    <source
+                        src="https://tcu.edu.ph/wp-content/uploads/2024/12/tcuavp.mp4"
+                        type="video/mp4"
+                    />
                     Your browser does not support the video tag.
                 </video>
 
@@ -1325,7 +1328,7 @@ export default function Sample1() {
                 {/* Cursive Line Background */}
                 {/* Top-left curved lines */}
                 <svg
-                    className="pointer-events-none absolute left-0 top-[-150px] -z-0 h-[40%] w-[70%] opacity-80"
+                    className="pointer-events-none absolute top-[-150px] left-0 -z-0 h-[40%] w-[70%] opacity-80"
                     viewBox="0 0 1440 320"
                     xmlns="http://www.w3.org/2000/svg"
                     preserveAspectRatio="none"
@@ -1358,7 +1361,7 @@ export default function Sample1() {
 
                 {/* Bottom-right curved lines */}
                 <svg
-                    className="pointer-events-none absolute bottom-[-150px] right-[-20px] -z-0 h-[40%] w-[97%] rotate-[170deg] opacity-80"
+                    className="pointer-events-none absolute right-[-20px] bottom-[-150px] -z-0 h-[40%] w-[97%] rotate-[170deg] opacity-80"
                     viewBox="0 0 1440 320"
                     xmlns="http://www.w3.org/2000/svg"
                     preserveAspectRatio="none"
@@ -1410,7 +1413,7 @@ export default function Sample1() {
                                 controls.set({ opacity: 0, scale: 1.5, y: -50 })
                             }
                             viewport={{ once: false }}
-                            className="left-30 absolute top-10 mb-4 select-none font-serif text-8xl text-red-800"
+                            className="absolute top-10 left-30 mb-4 font-serif text-8xl text-red-800 select-none"
                         >
                             “
                         </motion.span>
@@ -1421,7 +1424,7 @@ export default function Sample1() {
                             whileInView={{ opacity: 1, y: 0, x: 0 }}
                             transition={{ duration: 0.7, ease: 'easeOut' }}
                             viewport={{ once: false }}
-                            className="bg-gradient-to-r from-red-900 to-red-700 px-10 py-8 text-3xl font-bold uppercase tracking-wide text-white shadow-lg md:text-4xl"
+                            className="bg-gradient-to-r from-red-900 to-red-700 px-10 py-8 text-3xl font-bold tracking-wide text-white uppercase shadow-lg md:text-4xl"
                         >
                             Transforming Excellence
                         </motion.div>
@@ -1432,7 +1435,7 @@ export default function Sample1() {
                             whileInView={{ opacity: 1, y: 0, x: 0 }}
                             transition={{ duration: 0.7, ease: 'easeOut' }}
                             viewport={{ once: false }}
-                            className="bg-gradient-to-r from-red-900 to-red-700 px-8 py-6 text-3xl font-bold uppercase tracking-wide text-white shadow-lg md:text-5xl"
+                            className="bg-gradient-to-r from-red-900 to-red-700 px-8 py-6 text-3xl font-bold tracking-wide text-white uppercase shadow-lg md:text-5xl"
                         >
                             Into Purpose
                         </motion.div>
@@ -1454,7 +1457,7 @@ export default function Sample1() {
                                 controls.set({ opacity: 0, scale: 1.5, y: 50 })
                             }
                             viewport={{ once: false }}
-                            className="right-50 absolute bottom-[-20px] mb-4 select-none font-serif text-8xl text-red-800"
+                            className="absolute right-50 bottom-[-20px] mb-4 font-serif text-8xl text-red-800 select-none"
                         >
                             ”
                         </motion.span>
@@ -1526,8 +1529,8 @@ export default function Sample1() {
                                     className="h-[360px] w-full object-cover transition-all duration-700 ease-in-out"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                                <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                                    <span className="mb-2 inline-block rounded-full bg-red-600 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide">
+                                <div className="absolute right-0 bottom-0 left-0 p-5 text-white">
+                                    <span className="mb-2 inline-block rounded-full bg-red-600 px-3 py-1 text-[10px] font-semibold tracking-wide uppercase">
                                         {activeNews.tag}
                                     </span>
                                     <h3 className="text-xl font-bold">
@@ -1617,7 +1620,7 @@ export default function Sample1() {
 
             <section
                 id="events"
-                className="relative overflow-hidden bg-gray-50 px-4 pb-12 pt-12"
+                className="relative overflow-hidden bg-gray-50 px-4 pt-12 pb-12"
             >
                 {/* Background shapes */}
                 <div
@@ -1673,17 +1676,17 @@ export default function Sample1() {
                                                     {event.description}
                                                 </p>
                                                 {event.tag && (
-                                                    <span className="mt-2 inline-block rounded-sm bg-red-700 px-3 py-1 text-xs uppercase text-white">
+                                                    <span className="mt-2 inline-block rounded-sm bg-red-700 px-3 py-1 text-xs text-white uppercase">
                                                         {event.tag}
                                                     </span>
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="absolute left-0 top-0 bg-red-700 px-6 py-4 text-center shadow-md">
+                                        <div className="absolute top-0 left-0 bg-red-700 px-6 py-4 text-center shadow-md">
                                             <div className="text-4xl font-bold text-white">
                                                 {day}
                                             </div>
-                                            <div className="text-lg uppercase text-gray-600 text-white">
+                                            <div className="text-lg text-gray-600 text-white uppercase">
                                                 {month}
                                             </div>
                                         </div>
@@ -1698,7 +1701,7 @@ export default function Sample1() {
                     {/* Upcoming Events */}
                     <div className="mb-3 flex items-center justify-between">
                         <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
-                            <span className="rounded-sm bg-red-700 px-3 py-1 text-sm uppercase text-white">
+                            <span className="rounded-sm bg-red-700 px-3 py-1 text-sm text-white uppercase">
                                 Upcoming
                             </span>
                             <span>Events</span>
@@ -1729,17 +1732,17 @@ export default function Sample1() {
                                                 {event.title}
                                             </h3>
                                             {event.tag && (
-                                                <span className="mt-1 inline-block rounded-sm bg-red-700 px-2 py-[2px] text-[10px] uppercase text-white">
+                                                <span className="mt-1 inline-block rounded-sm bg-red-700 px-2 py-[2px] text-[10px] text-white uppercase">
                                                     {event.tag}
                                                 </span>
                                             )}
                                         </div>
                                     </div>
-                                    <div className="absolute left-0 top-0 bg-white px-3 py-1 text-center shadow-md">
+                                    <div className="absolute top-0 left-0 bg-white px-3 py-1 text-center shadow-md">
                                         <div className="text-lg font-bold text-red-700">
                                             {day}
                                         </div>
-                                        <div className="text-xs uppercase text-gray-600">
+                                        <div className="text-xs text-gray-600 uppercase">
                                             {month}
                                         </div>
                                     </div>
@@ -1751,7 +1754,7 @@ export default function Sample1() {
                     {/* All Events */}
                     <div className="mb-3 flex items-center justify-between">
                         <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
-                            <span className="rounded-sm bg-red-700 px-3 py-1 text-sm uppercase text-white">
+                            <span className="rounded-sm bg-red-700 px-3 py-1 text-sm text-white uppercase">
                                 All
                             </span>
                             <span>Events</span>
@@ -1788,17 +1791,17 @@ export default function Sample1() {
                                                 {event.title}
                                             </h3>
                                             {event.tag && (
-                                                <span className="mt-1 inline-block rounded-sm bg-red-700 px-2 py-[2px] text-[10px] uppercase text-white">
+                                                <span className="mt-1 inline-block rounded-sm bg-red-700 px-2 py-[2px] text-[10px] text-white uppercase">
                                                     {event.tag}
                                                 </span>
                                             )}
                                         </div>
                                     </div>
-                                    <div className="absolute left-0 top-0 bg-white px-3 py-1 text-center shadow-md">
+                                    <div className="absolute top-0 left-0 bg-white px-3 py-1 text-center shadow-md">
                                         <div className="text-lg font-bold text-red-700">
                                             {day}
                                         </div>
-                                        <div className="text-xs uppercase text-gray-600">
+                                        <div className="text-xs text-gray-600 uppercase">
                                             {month}
                                         </div>
                                     </div>
@@ -1868,7 +1871,7 @@ export default function Sample1() {
                                                 y: isActive ? 0 : 6,
                                             }}
                                             transition={{ duration: 0.3 }}
-                                            className={`mt-2 break-words px-2 text-center text-[10px] font-semibold leading-tight ${
+                                            className={`mt-2 px-2 text-center text-[10px] leading-tight font-semibold break-words ${
                                                 isActive
                                                     ? 'text-white'
                                                     : 'text-gray-800'
@@ -1931,19 +1934,19 @@ export default function Sample1() {
                                             alt={colleges[selected].name}
                                             className="h-40 w-40 object-contain"
                                         />
-                                        <h2 className="mt-3 text-xl font-bold uppercase text-red-700">
+                                        <h2 className="mt-3 text-xl font-bold text-red-700 uppercase">
                                             {colleges[selected].name}
                                         </h2>
                                     </div>
 
-                                    <h3 className="mb-2 text-lg font-bold uppercase text-red-700">
+                                    <h3 className="mb-2 text-lg font-bold text-red-700 uppercase">
                                         Overview
                                     </h3>
-                                    <p className="mb-4 whitespace-pre-line text-justify text-sm leading-relaxed text-gray-700">
+                                    <p className="mb-4 text-justify text-sm leading-relaxed whitespace-pre-line text-gray-700">
                                         {colleges[selected].description}
                                     </p>
 
-                                    <h3 className="mb-2 text-lg font-bold uppercase text-red-700">
+                                    <h3 className="mb-2 text-lg font-bold text-red-700 uppercase">
                                         Objectives
                                     </h3>
                                     <ol className="list-decimal space-y-2 pl-5 text-justify text-sm leading-relaxed text-gray-800">
@@ -1958,7 +1961,7 @@ export default function Sample1() {
                             {/* COURSES */}
                             {activeTab === 'Courses' && (
                                 <div>
-                                    <h3 className="mb-3 text-lg font-bold uppercase tracking-wide text-red-700">
+                                    <h3 className="mb-3 text-lg font-bold tracking-wide text-red-700 uppercase">
                                         Courses
                                     </h3>
 
@@ -1992,7 +1995,7 @@ export default function Sample1() {
                                                             onClick={
                                                                 toggleCourse
                                                             }
-                                                            className="justify-left flex cursor-pointer select-none items-center border-b-4 border-red-700 bg-red-700 px-3 py-2"
+                                                            className="justify-left flex cursor-pointer items-center border-b-4 border-red-700 bg-red-700 px-3 py-2 select-none"
                                                         >
                                                             <p className="text-sm font-semibold tracking-wide text-white">
                                                                 {course.name}
@@ -2020,7 +2023,7 @@ export default function Sample1() {
                                                                                 key={
                                                                                     tagIdx
                                                                                 }
-                                                                                className="border border-red-700 bg-red-50 px-3 py-[4px] text-[11px] font-semibold uppercase tracking-wide text-red-700 shadow-sm"
+                                                                                className="border border-red-700 bg-red-50 px-3 py-[4px] text-[11px] font-semibold tracking-wide text-red-700 uppercase shadow-sm"
                                                                             >
                                                                                 {
                                                                                     tag
@@ -2096,7 +2099,7 @@ export default function Sample1() {
                                                                                     }
                                                                                     className="mb-3"
                                                                                 >
-                                                                                    <p className="mb-1 text-sm font-bold uppercase tracking-wide text-red-700">
+                                                                                    <p className="mb-1 text-sm font-bold tracking-wide text-red-700 uppercase">
                                                                                         {
                                                                                             detail.name
                                                                                         }
@@ -2145,7 +2148,7 @@ export default function Sample1() {
                             {/* FACULTY */}
                             {activeTab === 'Faculty' && (
                                 <div className="text-center">
-                                    <h3 className="mb-2 text-lg font-bold uppercase text-red-700">
+                                    <h3 className="mb-2 text-lg font-bold text-red-700 uppercase">
                                         Faculty
                                     </h3>
                                     <img
@@ -2164,7 +2167,7 @@ export default function Sample1() {
                             {/* College EVENTS */}
                             {activeTab === 'College Events' && (
                                 <div>
-                                    <h3 className="mb-2 text-lg font-bold uppercase text-red-700">
+                                    <h3 className="mb-2 text-lg font-bold text-red-700 uppercase">
                                         College Events
                                     </h3>
                                     <div className="mt-4 grid grid-cols-2 gap-3">
@@ -2173,7 +2176,7 @@ export default function Sample1() {
                                                 key={index}
                                                 src={src}
                                                 alt={`Event ${index + 1}`}
-                                                className="h-60 w-full cursor-pointer object-cover shadow-md transition-transform duration-300 hover:rotate-1 hover:scale-105"
+                                                className="h-60 w-full cursor-pointer object-cover shadow-md transition-transform duration-300 hover:scale-105 hover:rotate-1"
                                                 onClick={() =>
                                                     setActiveImage(src)
                                                 }
@@ -2197,7 +2200,7 @@ export default function Sample1() {
                         {/* Lightbox Modal for Faculty & Events */}
                         {activeImage && (
                             <div
-                                className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4"
+                                className="bg-opacity-80 fixed inset-0 z-50 flex items-center justify-center bg-black p-4"
                                 onClick={() => setActiveImage(null)}
                             >
                                 <img
@@ -2210,7 +2213,7 @@ export default function Sample1() {
                                 />
                                 <button
                                     onClick={() => setActiveImage(null)}
-                                    className="absolute right-6 top-6 text-3xl font-bold text-white hover:text-red-500"
+                                    className="absolute top-6 right-6 text-3xl font-bold text-white hover:text-red-500"
                                 >
                                     ×
                                 </button>
@@ -2232,17 +2235,17 @@ export default function Sample1() {
             </p>
 
             {/* Inclined, dynamic line with graphic accent */}
-            <div className="w-100 relative mx-auto mt-6 h-2">
+            <div className="relative mx-auto mt-6 h-2 w-100">
                 {/* Background line */}
                 <div className="absolute inset-0 -skew-x-12 transform rounded bg-red-700"></div>
                 {/* Optional graphic: small white triangle on the line */}
-                <div className="absolute right-0 top-0 h-2 w-2 rotate-45 bg-white"></div>
+                <div className="absolute top-0 right-0 h-2 w-2 rotate-45 bg-white"></div>
             </div>
 
             {/* Research Section */}
             <section
                 id="research"
-                className="font-montserrat relative overflow-hidden bg-white px-6 pb-16 pt-10"
+                className="font-montserrat relative overflow-hidden bg-white px-6 pt-10 pb-16"
             >
                 <div className="mx-auto max-w-7xl">
                     <div className="grid gap-8 md:grid-cols-3">
@@ -2291,7 +2294,7 @@ export default function Sample1() {
                 {/* Modal for Research */}
                 {selectedResearch && (
                     <div
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4"
+                        className="bg-opacity-80 fixed inset-0 z-50 flex items-center justify-center bg-black p-4"
                         onClick={() => setSelectedResearch(null)}
                     >
                         <div
@@ -2322,7 +2325,7 @@ export default function Sample1() {
                             </div>
                             <button
                                 onClick={() => setSelectedResearch(null)}
-                                className="absolute right-6 top-6 text-3xl font-bold text-white hover:text-red-500"
+                                className="absolute top-6 right-6 text-3xl font-bold text-white hover:text-red-500"
                             >
                                 ×
                             </button>
@@ -2403,7 +2406,7 @@ export default function Sample1() {
                                 >
                                     Taguig City University
                                 </h3>
-                                <p className="mx-auto max-w-3xl text-lg font-thin leading-relaxed text-gray-700">
+                                <p className="mx-auto max-w-3xl text-lg leading-relaxed font-thin text-gray-700">
                                     Motivated by the urgent need to serve the
                                     youth of a burgeoning Taguig City, the Local
                                     Government Administration enacted Ordinance
@@ -2419,7 +2422,7 @@ export default function Sample1() {
                                     No. 13, Series of 2009.
                                 </p>
                                 <br />
-                                <p className="mx-auto max-w-3xl text-lg font-thin leading-relaxed text-gray-700">
+                                <p className="mx-auto max-w-3xl text-lg leading-relaxed font-thin text-gray-700">
                                     All students enrolled at TCU are
                                     beneficiaries of the City’s scholarship
                                     program wherein their educational expenses
@@ -2435,7 +2438,7 @@ export default function Sample1() {
                                     prosperous life for its populace.
                                 </p>
                                 <br />
-                                <p className="mx-auto max-w-3xl text-lg font-thin leading-relaxed text-gray-700">
+                                <p className="mx-auto max-w-3xl text-lg leading-relaxed font-thin text-gray-700">
                                     TCU flourishes with the unwavering support
                                     of the Taguig City Government, under the
                                     leadership of Mayor Maria Laarni L.
@@ -2444,7 +2447,7 @@ export default function Sample1() {
                                     “PROBINSYUDAD™”
                                 </p>
                                 <br />
-                                <p className="mx-auto max-w-3xl text-lg font-thin leading-relaxed text-gray-700">
+                                <p className="mx-auto max-w-3xl text-lg leading-relaxed font-thin text-gray-700">
                                     TCU has garnered national recognition for
                                     its myriad of academic and extracurricular
                                     achievements. As a young institution, TCU
@@ -2453,7 +2456,7 @@ export default function Sample1() {
                                     to academic excellence.
                                 </p>
                                 <br />
-                                <p className="mx-auto max-w-3xl text-lg font-thin leading-relaxed text-gray-700">
+                                <p className="mx-auto max-w-3xl text-lg leading-relaxed font-thin text-gray-700">
                                     Likewise, it has proven its remarkable
                                     achievements in various fields such as
                                     cultural, scientific, technological, and
@@ -2511,7 +2514,7 @@ export default function Sample1() {
                                 <h3 className="mb-6 text-3xl font-bold text-red-700">
                                     Campus Life
                                 </h3>
-                                <p className="mx-auto mb-10 max-w-3xl text-lg font-thin leading-relaxed text-gray-700">
+                                <p className="mx-auto mb-10 max-w-3xl text-lg leading-relaxed font-thin text-gray-700">
                                     Taguig City University offers a vibrant and
                                     inclusive campus environment...
                                 </p>
@@ -2550,7 +2553,7 @@ export default function Sample1() {
                                 {/* Lightbox Modal */}
                                 {selectedImage && (
                                     <div
-                                        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4"
+                                        className="bg-opacity-80 fixed inset-0 z-50 flex items-center justify-center bg-black p-4"
                                         onClick={() => setSelectedImage(null)}
                                     >
                                         <img
@@ -2565,7 +2568,7 @@ export default function Sample1() {
                                             onClick={() =>
                                                 setSelectedImage(null)
                                             }
-                                            className="absolute right-6 top-6 text-3xl font-bold text-white hover:text-red-500"
+                                            className="absolute top-6 right-6 text-3xl font-bold text-white hover:text-red-500"
                                         >
                                             ×
                                         </button>
@@ -2579,7 +2582,7 @@ export default function Sample1() {
                                 <h3 className="mb-6 text-3xl font-bold text-red-700">
                                     Sports & Student Development
                                 </h3>
-                                <p className="mx-auto mb-10 max-w-3xl text-lg font-thin leading-relaxed text-gray-700">
+                                <p className="mx-auto mb-10 max-w-3xl text-lg leading-relaxed font-thin text-gray-700">
                                     Beyond academics, TCU supports excellence in
                                     athletics and physical education...
                                 </p>
@@ -2701,7 +2704,7 @@ export default function Sample1() {
                                 {/* Lightbox Modal */}
                                 {selectedImage && (
                                     <div
-                                        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4"
+                                        className="bg-opacity-80 fixed inset-0 z-50 flex items-center justify-center bg-black p-4"
                                         onClick={() => setSelectedImage(null)}
                                     >
                                         <img
@@ -2716,7 +2719,7 @@ export default function Sample1() {
                                             onClick={() =>
                                                 setSelectedImage(null)
                                             }
-                                            className="absolute right-6 top-6 text-3xl font-bold text-white hover:text-red-500"
+                                            className="absolute top-6 right-6 text-3xl font-bold text-white hover:text-red-500"
                                         >
                                             ×
                                         </button>
@@ -2749,7 +2752,7 @@ export default function Sample1() {
                                     Administration
                                 </h3>
 
-                                <p className="mx-auto mb-10 max-w-3xl text-center text-lg font-thin leading-relaxed text-gray-700">
+                                <p className="mx-auto mb-10 max-w-3xl text-center text-lg leading-relaxed font-thin text-gray-700">
                                     The administrative offices of Taguig City
                                     University ensure that all academic,
                                     operational, and student support services
@@ -2811,7 +2814,7 @@ export default function Sample1() {
                                     ].map((office, index) => (
                                         <div
                                             key={index}
-                                            className="relative cursor-pointer overflow-hidden shadow-md transition-transform duration-300 hover:rotate-[1deg] hover:scale-105"
+                                            className="relative cursor-pointer overflow-hidden shadow-md transition-transform duration-300 hover:scale-105 hover:rotate-[1deg]"
                                             onClick={() =>
                                                 setSelectedImage(
                                                     `/storage/images/${office.src}`,
@@ -2851,7 +2854,7 @@ export default function Sample1() {
                                                 onClick={() =>
                                                     setSelectedImage(null)
                                                 }
-                                                className="absolute right-4 top-3 text-3xl font-bold text-white hover:text-red-500"
+                                                className="absolute top-3 right-4 text-3xl font-bold text-white hover:text-red-500"
                                             >
                                                 ×
                                             </button>
@@ -2960,7 +2963,7 @@ Reach out to us for inquiries, admissions, or collaborations.`}
                     onClick={() =>
                         window.scrollTo({ top: 0, behavior: 'smooth' })
                     }
-                    className="fixed bottom-6 right-6 z-50 rounded-full bg-red-700 p-3 text-white shadow-lg transition hover:bg-red-800"
+                    className="fixed right-6 bottom-6 z-50 rounded-full bg-red-700 p-3 text-white shadow-lg transition hover:bg-red-800"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
