@@ -48,7 +48,6 @@ import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 
-// Detect production environment
 const isProduction = process.env.NODE_ENV === 'production';
 
 export default defineConfig({
@@ -56,7 +55,7 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
             ssr: 'resources/js/ssr.tsx',
-            refresh: !isProduction, // only use hot reload in dev
+            refresh: !isProduction,
             buildDirectory: 'build',
         }),
         react(),
@@ -65,12 +64,12 @@ export default defineConfig({
     esbuild: {
         jsx: 'automatic',
     },
-    // ✅ Automatically handle HTTPS base in Render and dev in local
     base: isProduction ? '/build/' : '/',
     server: {
         host: 'localhost',
         port: 5173,
         strictPort: true,
+        origin: 'http://localhost:5173',
         hmr: {
             host: 'localhost',
         },
