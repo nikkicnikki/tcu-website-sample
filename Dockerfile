@@ -55,6 +55,7 @@ RUN apt-get update && apt-get install -y \
 # ---------- Apache ----------
 RUN a2enmod rewrite headers
 RUN sed -i 's/80/10000/g' /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 EXPOSE 10000
 
 # ---------- Copy project ----------
@@ -70,13 +71,15 @@ RUN npm install
 RUN npm run build
 RUN chown -R www-data:www-data public/build
 
+# ---------- Ensure SQLite and storage writable ----------
+RUN mkdir -p /var/www/html/database && \
+    touch /var/www/html/database/database.sqlite && \
+    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
+
 # ---------- Laravel optimization ----------
 RUN php artisan config:cache \
     && php artisan route:cache \
     && php artisan view:cache
-
-# ---------- Permissions ----------
-RUN chown -R www-data:www-data storage bootstrap/cache
 
 # ---------- Apache virtual host ----------
 RUN echo '<VirtualHost *:10000>\n\
@@ -93,6 +96,7 @@ RUN echo "AddType application/javascript .js" >> /etc/apache2/apache2.conf
 # ---------- Serve from public ----------
 WORKDIR /var/www/html/public
 
+# (Optional sanity check during build)
 RUN php artisan --version || echo "Laravel not bootable"
 
 # ---------- Start Apache ----------
