@@ -26,8 +26,13 @@ import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 
+// Detect if we're running on Render
+const isRender = process.env.RENDER === 'true';
+
 export default defineConfig({
-    base: 'https://tcu-website-sample.onrender.com/', // ✅ Force HTTPS asset URLs
+    base: isRender
+        ? 'https://tcu-website-sample.onrender.com/' // ✅ Force HTTPS for production (Render)
+        : '/',
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],

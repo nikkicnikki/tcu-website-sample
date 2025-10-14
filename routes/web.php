@@ -24,6 +24,10 @@ Route::get('/ping', function () {
     return 'pong';
 });
 
+Route::get('/check-app-url', function () {
+    return config('app.url');
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
     // Route::get('dashboard', function () {
     //     return Inertia::render('dashboard');
