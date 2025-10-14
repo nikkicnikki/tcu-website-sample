@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CollegeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -11,9 +12,9 @@ use Inertia\Inertia;
 // Route::get('/sample1', function () {
 //     return Inertia::render('sample1');
 // });
-Route::get('colleges/cas', function () {
-    return Inertia::render('colleges/cas');
-});
+
+Route::get('/colleges', [CollegeController::class, 'index'])->name('colleges.index');
+Route::get('/colleges/{slug}', [CollegeController::class, 'show'])->name('colleges.show');
 
 // Make /sample1 the default homepage
 Route::get('/', function () {
@@ -28,11 +29,4 @@ Route::get('/check-app-url', function () {
     return config('app.url');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    // Route::get('dashboard', function () {
-    //     return Inertia::render('dashboard');
-    // })->name('dashboard');
-});
-
-// require __DIR__ . '/settings.php';
-// require __DIR__ . '/auth.php';
+Route::middleware(['auth', 'verified'])->group(function () {});

@@ -376,7 +376,7 @@ export default function Sample1() {
                     ],
                 },
             ],
-            image: '/storage/images/cas_building.jpg',
+            image: '/storage/images/buildingbg1.jpg',
             featuredImage: '/storage/images/casfaculty.png',
             objective: [
                 'To develop well-rounded persons who are proud of their cultural heritage and responsive to national and international concerns.',
@@ -499,7 +499,7 @@ export default function Sample1() {
                     ],
                 },
             ],
-            image: '/storage/images/cbm_building.jpg',
+            image: '/storage/images/buildingbg1.jpg',
             featuredImage: '/storage/images/cbmfaculty.png',
             objective: [
                 'To apply analytically the fundamental concepts, theories, principles, and practices of business management within the context of regulatory and legal framework.',
@@ -1513,6 +1513,30 @@ export default function Sample1() {
                         className="absolute bottom-0 left-0 h-full w-auto object-cover opacity-30"
                     />
                 </div>
+                {/* Background shapes */}
+                <div
+                    className="pointer-events-none absolute inset-0"
+                    aria-hidden="true"
+                >
+                    <svg
+                        className="absolute inset-0 h-full w-full"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1200 800"
+                        preserveAspectRatio="none"
+                    >
+                        <polygon
+                            points="1200,0 1000,0 1200,300"
+                            fill="#991b1b"
+                            opacity="0.5"
+                        />
+                        {/* <polygon
+                            points="0,800 0,640 140,800"
+                            fill="#dc2626"
+                            opacity="0.5"
+                        /> */}
+                    </svg>
+                </div>
+
                 <div className="origin-top scale-[0.9] transform">
                     {/* Background image */}
 
@@ -1820,6 +1844,9 @@ export default function Sample1() {
             <section
                 id="academics"
                 className="relative overflow-hidden bg-gray-100 px-8 py-10"
+                style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                }}
             >
                 <div className="mx-auto flex max-w-7xl flex-col gap-0 md:flex-row md:items-start">
                     {/* LEFT SIDE: College Navigator */}
@@ -1932,7 +1959,7 @@ export default function Sample1() {
                                         <img
                                             src={colleges[selected].src}
                                             alt={colleges[selected].name}
-                                            className="h-40 w-40 object-contain"
+                                            className="h-40 w-40 rounded-full border-4 border-red-700 object-contain shadow-lg"
                                         />
                                         <h2 className="mt-3 text-xl font-bold text-red-700 uppercase">
                                             {colleges[selected].name}
@@ -1942,14 +1969,14 @@ export default function Sample1() {
                                     <h3 className="mb-2 text-lg font-bold text-red-700 uppercase">
                                         Overview
                                     </h3>
-                                    <p className="mb-4 text-justify text-sm leading-relaxed whitespace-pre-line text-gray-700">
+                                    <p className="text-md mb-4 text-justify leading-relaxed whitespace-pre-line text-gray-700">
                                         {colleges[selected].description}
                                     </p>
 
                                     <h3 className="mb-2 text-lg font-bold text-red-700 uppercase">
                                         Objectives
                                     </h3>
-                                    <ol className="list-decimal space-y-2 pl-5 text-justify text-sm leading-relaxed text-gray-800">
+                                    <ol className="text-md list-decimal space-y-2 pl-5 text-justify leading-relaxed text-gray-800">
                                         {colleges[selected].objective.map(
                                             (item, idx) => (
                                                 <li key={idx}>{item}</li>
