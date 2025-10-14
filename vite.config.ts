@@ -61,17 +61,18 @@ export default defineConfig({
         react(),
         tailwindcss(),
     ],
-    esbuild: {
-        jsx: 'automatic',
-    },
+    esbuild: { jsx: 'automatic' },
     base: isProduction ? '/build/' : '/',
     server: {
-        host: 'localhost',
+        host: '127.0.0.1',
         port: 5173,
         strictPort: true,
-        origin: 'http://localhost:5173',
+        origin: 'http://127.0.0.1:5173',
+        cors: true,
         hmr: {
-            host: 'localhost',
+            protocol: 'ws',
+            host: '127.0.0.1',
+            port: 5173,
         },
     },
 });
