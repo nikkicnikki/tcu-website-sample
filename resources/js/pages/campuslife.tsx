@@ -1,6 +1,6 @@
 import Header from '@/components/header';
 import { Head, usePage } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaFacebookF, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 
 interface College {
@@ -97,54 +97,158 @@ export default function CampusLife() {
             {/* Header */}
             <Header colleges={colleges} />
 
-            <div className="min-h-screen bg-gray-100 pt-32">
+            <div className="min-h-screen bg-white pt-[90px]">
                 {/* Hero Section */}
-                <section className="relative bg-white py-20 text-center text-red-900">
-                    <h1 className="mb-4 text-5xl font-bold">Campus Life</h1>
-                    <p className="mx-auto max-w-2xl text-lg">
-                        Explore the vibrant student culture, engaging events,
-                        and thriving campus community at Taguig City University.
-                    </p>
+                <section className="relative flex h-[700px] items-center justify-center border-b-[5px] border-red-700 text-center text-white sm:h-[700px]">
+                    {/* Background image */}
+                    <img
+                        src="/storage/images/campus-life-banner.jpg" // 🖼️ Change this to your actual image path
+                        alt="Campus Life Background"
+                        className="absolute inset-0 h-full w-full object-cover"
+                        style={{ objectPosition: 'center 50%' }}
+                    />
+
+                    {/* Dark overlay for readability */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
+
+                    {/* Text content */}
+                    <div className="relative z-10 px-6">
+                        <h1 className="mb-4 text-4xl font-bold drop-shadow-lg sm:text-5xl md:text-6xl">
+                            Campus Life
+                        </h1>
+                        <p className="mx-auto max-w-2xl text-base drop-shadow-md sm:text-lg md:text-xl">
+                            Explore the vibrant student culture, engaging
+                            events, and thriving campus community at Taguig City
+                            University.
+                        </p>
+                    </div>
                 </section>
 
                 {/* Dynamic Sections */}
-                <section className="mx-auto max-w-6xl space-y-10 px-6 py-16">
-                    {sections.map((section) => (
-                        <div className="relative h-150 overflow-hidden shadow-lg">
-                            <div className="animate-slide flex">
-                                {[...section.images, ...section.images].map(
-                                    (img, idx) => (
-                                        <div
-                                            key={idx}
-                                            className="group relative h-150 w-full flex-shrink-0 cursor-pointer"
-                                            style={{
-                                                width: `${100 / section.images.length}%`,
-                                            }}
-                                        >
-                                            {/* Image with hover scale */}
-                                            <img
-                                                src={img}
-                                                alt={`${section.title} ${idx + 1}`}
-                                                className="h-150 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                <section className="mx-auto max-w-6xl space-y-20 px-6 py-16">
+                    {sections.map((section) => {
+                        const [currentIndex, setCurrentIndex] =
+                            React.useState(0);
+                        const carouselRef = React.useRef(null);
+                        const total = section.images.length;
+
+                        const scrollToIndex = (index: number) => {
+                            if (carouselRef.current) {
+                                const container =
+                                    carouselRef.current as HTMLDivElement;
+                                const itemWidth = container.scrollWidth / total;
+                                container.scrollTo({
+                                    left: index * itemWidth,
+                                    behavior: 'smooth',
+                                });
+                                setCurrentIndex(index);
+                            }
+                        };
+
+                        const handleLeft = () => {
+                            const newIndex =
+                                currentIndex === 0
+                                    ? total - 1
+                                    : currentIndex - 1;
+                            scrollToIndex(newIndex);
+                        };
+
+                        const handleRight = () => {
+                            const newIndex =
+                                currentIndex === total - 1
+                                    ? 0
+                                    : currentIndex + 1;
+                            scrollToIndex(newIndex);
+                        };
+
+                        return (
+                            <div key={section.title} className="space-y-6">
+                                {/* Title Above */}
+                                <div className="text-center">
+                                    <h2 className="text-3xl font-extrabold tracking-wide text-gray-900 md:text-4xl">
+                                        {section.title}
+                                    </h2>
+                                    {/* <div className="mx-auto mt-2 h-1 w-20 rounded-full bg-gradient-to-r from-red-600 to-pink-500"></div> */}
+                                    <div className="relative mx-auto mt-0 h-1 w-100">
+                                        {/* Background line */}
+                                        <div className="absolute inset-0 -skew-x-12 transform rounded bg-red-700"></div>
+                                        {/* Optional graphic: small white triangle on the line */}
+                                        <div className="absolute top-0 right-0 h-1 w-2 rotate-45 bg-white"></div>
+                                        <div className="absolute top-0 right-2 h-1 w-2 rotate-45 bg-white"></div>
+                                        <div className="absolute top-0 right-4 h-1 w-2 rotate-45 bg-white"></div>
+
+                                        <div className="absolute top-0 left-0 h-1 w-2 rotate-45 bg-white"></div>
+                                        <div className="absolute top-0 left-2 h-1 w-2 rotate-45 bg-white"></div>
+                                        <div className="absolute top-0 left-4 h-1 w-2 rotate-45 bg-white"></div>
+                                    </div>
+                                    <p className="relative mx-auto mt-1 max-w-3xl bg-red-900 px-4 text-base text-white md:text-lg">
+                                        {section.desc}
+                                        <div className="absolute bottom-4 left-[-10px] h-1 w-15 rotate-45 bg-white"></div>
+                                        <div className="absolute bottom-1 left-[-10px] h-1 w-15 rotate-45 bg-white"></div>
+                                        <div className="absolute bottom-[-15px] left-[-13px] h-3 w-15 rotate-45 bg-white"></div>
+
+                                        <div className="absolute right-[-10px] bottom-4 h-1 w-15 rotate-135 bg-white"></div>
+                                        <div className="absolute right-[-10px] bottom-1 h-1 w-15 rotate-135 bg-white"></div>
+                                        <div className="absolute right-[-13px] bottom-[-15px] h-3 w-15 rotate-135 bg-white"></div>
+                                    </p>
+                                </div>
+
+                                {/* Carousel */}
+                                <div className="relative h-100 overflow-hidden shadow-lg">
+                                    <div
+                                        ref={carouselRef}
+                                        className="scrollbar-hide flex overflow-x-hidden"
+                                    >
+                                        {section.images.map((img, idx) => (
+                                            <div
+                                                key={idx}
+                                                className="w-72 flex-shrink-0 cursor-pointer sm:w-80 md:w-96"
                                                 onClick={() =>
                                                     setModalImage(img)
-                                                } // opens modal
+                                                }
+                                            >
+                                                <img
+                                                    src={img}
+                                                    alt={`${section.title} ${idx + 1}`}
+                                                    className="h-100 w-full object-cover transition-transform duration-300 hover:scale-105"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Left arrow */}
+                                    <button
+                                        onClick={handleLeft}
+                                        className="absolute top-0 bottom-0 left-0 flex w-12 items-center justify-center bg-black/30 text-5xl text-white hover:bg-black/50 sm:text-6xl"
+                                    >
+                                        {/* &lt; */}
+                                    </button>
+
+                                    {/* Right arrow */}
+                                    <button
+                                        onClick={handleRight}
+                                        className="absolute top-0 right-0 bottom-0 flex w-12 items-center justify-center bg-black/30 text-5xl text-white hover:bg-black/50 sm:text-6xl"
+                                    >
+                                        {/* &gt; */}
+                                    </button>
+
+                                    {/* Progress bar */}
+                                    <div className="absolute right-0 bottom-0 left-0 mb-2 flex gap-1 px-4">
+                                        {section.images.map((_, idx) => (
+                                            <div
+                                                key={idx}
+                                                className={`h-[2px] flex-1 transition-colors duration-300 ${
+                                                    idx === currentIndex
+                                                        ? 'bg-red-500'
+                                                        : 'bg-white/30'
+                                                }`}
                                             />
-                                        </div>
-                                    ),
-                                )}
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
-                            {/* Static overlay always visible */}
-                            <div className="absolute bottom-0 w-full bg-gradient-to-r from-black/80 to-transparent p-4 text-white">
-                                <h2 className="text-xl font-bold drop-shadow-lg md:text-2xl">
-                                    {section.title}
-                                </h2>
-                                <p className="text-sm drop-shadow-md md:text-lg">
-                                    {section.desc}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </section>
 
                 {/* Image Modal */}
@@ -292,8 +396,19 @@ Reach out to us for inquiries, admissions, or collaborations.`}
                     .animate-slide {
                         display: flex;
                         width: calc(2 * 100%);
-                        animation: slide 30s linear infinite;
+                        animation: slide 40s linear infinite;
                     }
+                    
+                    /* Add this to your global CSS (e.g., app.css or tailwind.css) */
+                    .scrollbar-hide::-webkit-scrollbar {
+                        display: none; /* Chrome, Safari, Opera */
+                    }
+                    .scrollbar-hide {
+                        -ms-overflow-style: none; /* IE and Edge */
+                        scrollbar-width: none; /* Firefox */
+                    }
+
+                    
                 `}
             </style>
         </>

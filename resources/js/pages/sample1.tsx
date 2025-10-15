@@ -1352,7 +1352,7 @@ export default function Sample1() {
                         strokeWidth="8"
                         strokeLinecap="round"
                         opacity="1"
-                        d="M0,200 C300,60 600,300 1100,150"
+                        d="M0,200 C400,60 700,300 1100,130"
                     />
                     <path
                         fill="none"
