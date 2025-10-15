@@ -110,30 +110,36 @@ export default function CampusLife() {
                 {/* Dynamic Sections */}
                 <section className="mx-auto max-w-6xl space-y-10 px-6 py-16">
                     {sections.map((section) => (
-                        <div className="group relative h-150 overflow-hidden shadow-lg">
-                            <div className="animate-slide group-hover:pause-slide flex transform transition-transform duration-300 group-hover:scale-105">
+                        <div className="relative h-150 overflow-hidden shadow-lg">
+                            <div className="animate-slide flex">
                                 {[...section.images, ...section.images].map(
                                     (img, idx) => (
-                                        <img
+                                        <div
                                             key={idx}
-                                            src={img}
-                                            alt={`${section.title} ${idx + 1}`}
-                                            className="h-150 w-full flex-shrink-0 cursor-pointer object-cover"
+                                            className="group relative h-150 w-full flex-shrink-0 cursor-pointer"
                                             style={{
                                                 width: `${100 / section.images.length}%`,
                                             }}
-                                            onClick={() => setModalImage(img)}
-                                        />
+                                        >
+                                            {/* Image with hover scale */}
+                                            <img
+                                                src={img}
+                                                alt={`${section.title} ${idx + 1}`}
+                                                className="h-150 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                onClick={() =>
+                                                    setModalImage(img)
+                                                } // opens modal
+                                            />
+                                        </div>
                                     ),
                                 )}
                             </div>
-
-                            {/* Overlay */}
-                            <div className="absolute bottom-0 w-full bg-gradient-to-r from-black/90 to-black/0 p-6 text-white">
-                                <h2 className="mb-2 text-3xl font-bold drop-shadow-lg md:text-4xl">
+                            {/* Static overlay always visible */}
+                            <div className="absolute bottom-0 w-full bg-gradient-to-r from-black/80 to-transparent p-4 text-white">
+                                <h2 className="text-xl font-bold drop-shadow-lg md:text-2xl">
                                     {section.title}
                                 </h2>
-                                <p className="text-lg drop-shadow-md md:text-xl">
+                                <p className="text-sm drop-shadow-md md:text-lg">
                                     {section.desc}
                                 </p>
                             </div>
@@ -283,17 +289,11 @@ Reach out to us for inquiries, admissions, or collaborations.`}
                         0% { transform: translateX(0); }
                         100% { transform: translateX(-50%); }
                     }
-
                     .animate-slide {
                         display: flex;
                         width: calc(2 * 100%);
                         animation: slide 30s linear infinite;
                     }
-
-                    .pause-slide {
-                        animation-play-state: paused; /* pauses animation on hover */
-                    }
-
                 `}
             </style>
         </>
