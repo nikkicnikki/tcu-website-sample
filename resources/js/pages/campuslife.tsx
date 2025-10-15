@@ -110,11 +110,8 @@ export default function CampusLife() {
                 {/* Dynamic Sections */}
                 <section className="mx-auto max-w-6xl space-y-10 px-6 py-16">
                     {sections.map((section) => (
-                        <div
-                            key={section.title}
-                            className="relative h-150 overflow-hidden shadow-lg"
-                        >
-                            <div className="animate-slide flex">
+                        <div className="group relative h-150 overflow-hidden shadow-lg">
+                            <div className="animate-slide group-hover:pause-slide flex transform transition-transform duration-300 group-hover:scale-105">
                                 {[...section.images, ...section.images].map(
                                     (img, idx) => (
                                         <img
@@ -132,7 +129,7 @@ export default function CampusLife() {
                             </div>
 
                             {/* Overlay */}
-                            <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 text-white">
+                            <div className="absolute bottom-0 w-full bg-gradient-to-r from-black/90 to-black/0 p-6 text-white">
                                 <h2 className="mb-2 text-3xl font-bold drop-shadow-lg md:text-4xl">
                                     {section.title}
                                 </h2>
@@ -286,11 +283,17 @@ Reach out to us for inquiries, admissions, or collaborations.`}
                         0% { transform: translateX(0); }
                         100% { transform: translateX(-50%); }
                     }
+
                     .animate-slide {
                         display: flex;
                         width: calc(2 * 100%);
                         animation: slide 30s linear infinite;
                     }
+
+                    .pause-slide {
+                        animation-play-state: paused; /* pauses animation on hover */
+                    }
+
                 `}
             </style>
         </>

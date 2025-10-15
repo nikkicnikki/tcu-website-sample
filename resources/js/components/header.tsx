@@ -50,7 +50,7 @@ export default function Header({ colleges }: HeaderProps) {
 
     return (
         <header
-            className={`fixed left-0 z-50 w-full transition-all duration-100 ${
+            className={`duration-001 fixed left-0 z-50 w-full transition-all ${
                 scrolled
                     ? 'top-0 bg-gradient-to-r from-red-900 to-red-600 shadow-md'
                     : 'top-9 bg-gradient-to-r from-red-900 to-red-600 shadow-md'
