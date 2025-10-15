@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampusLifeController;
 use App\Http\Controllers\CollegeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,6 +16,8 @@ use Inertia\Inertia;
 
 Route::get('/colleges', [CollegeController::class, 'index'])->name('colleges.index');
 Route::get('/colleges/{slug}', [CollegeController::class, 'show'])->name('colleges.show');
+
+Route::get('/campus-life', [CampusLifeController::class, 'index'])->name('campus.life');
 
 // Make /sample1 the default homepage
 Route::get('/', function () {

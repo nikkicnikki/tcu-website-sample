@@ -50,7 +50,7 @@ export default function Header({ colleges }: HeaderProps) {
 
     return (
         <header
-            className={`fixed left-0 z-50 w-full transition-all duration-300 ${
+            className={`fixed left-0 z-50 w-full transition-all duration-100 ${
                 scrolled
                     ? 'top-0 bg-gradient-to-r from-red-900 to-red-600 shadow-md'
                     : 'top-9 bg-gradient-to-r from-red-900 to-red-600 shadow-md'
@@ -168,6 +168,12 @@ export default function Header({ colleges }: HeaderProps) {
                         </div>
 
                         <a className="text-white hover:underline">Research</a>
+                        <a
+                            href="/campus-life"
+                            className="text-white decoration-2 underline-offset-10 hover:underline"
+                        >
+                            Campus Life
+                        </a>
                         <a className="text-white hover:underline">About</a>
                     </nav>
 
@@ -226,6 +232,13 @@ export default function Header({ colleges }: HeaderProps) {
 
                         <a className="hover:underline">Admission</a>
                         <a className="hover:underline">Research</a>
+                        <a
+                            href="/campus-life"
+                            className="hover:underline"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            Campus Life
+                        </a>
                         <a className="hover:underline">About</a>
                     </nav>
                 </div>

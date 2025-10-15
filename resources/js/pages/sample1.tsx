@@ -1183,6 +1183,12 @@ export default function Sample1() {
                             >
                                 Research
                             </a>
+                            <a
+                                href="/campus-life"
+                                className="text-white decoration-2 underline-offset-10 hover:underline"
+                            >
+                                Campus Life
+                            </a>
 
                             <a
                                 href="#about"
@@ -1260,6 +1266,13 @@ export default function Sample1() {
                                 onClick={() => setMenuOpen(false)}
                             >
                                 Research
+                            </a>
+                            <a
+                                href="/campus-life"
+                                className="hover:underline"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Campus Life
                             </a>
 
                             <a
@@ -1596,7 +1609,7 @@ export default function Sample1() {
                                             <div className="flex-1">
                                                 <div className="flex items-center justify-between">
                                                     <h4
-                                                        className={`text-sm font-semibold ${
+                                                        className={`text-md font-semibold ${
                                                             activeIndex === idx
                                                                 ? 'text-red-700'
                                                                 : 'text-gray-800'
@@ -1604,16 +1617,16 @@ export default function Sample1() {
                                                     >
                                                         {item.title}
                                                     </h4>
-                                                    <span className="ml-2 rounded-full bg-red-100 px-2 py-0.5 text-[9px] font-semibold text-red-700">
+                                                    <span className="ml-2 rounded-full bg-red-700 px-2 py-0.5 text-[12px] font-thin text-white">
                                                         {item.tag}
                                                     </span>
                                                 </div>
-                                                <p className="text-[11px] text-gray-500">
+                                                <p className="text-[13px] text-gray-500">
                                                     {item.date}
                                                 </p>
                                                 <a
                                                     href={item.link}
-                                                    className="text-[11px] font-semibold text-red-500 hover:text-red-700"
+                                                    className="text-[13px] font-semibold text-red-500 hover:text-red-700"
                                                 >
                                                     View →
                                                 </a>

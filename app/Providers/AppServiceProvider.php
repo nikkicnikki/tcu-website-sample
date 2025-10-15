@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\CollegeController;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,5 +25,9 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }
+
+        // Inertia::share([
+        //     'colleges' => fn() => app(CollegeController::class)->colleges(),
+        // ]);
     }
 }

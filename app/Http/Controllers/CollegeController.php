@@ -6,7 +6,8 @@ use Inertia\Inertia;
 
 class CollegeController extends Controller
 {
-    private function colleges()
+
+    public function colleges()
     {
         return [
             [
