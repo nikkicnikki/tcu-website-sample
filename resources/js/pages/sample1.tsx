@@ -2279,7 +2279,8 @@ export default function Sample1() {
                 {/* Background line */}
                 <div className="absolute inset-0 -skew-x-12 transform rounded bg-red-700"></div>
                 {/* Optional graphic: small white triangle on the line */}
-                <div className="absolute top-0 right-0 h-2 w-2 rotate-45 bg-white"></div>
+                <div className="absolute top-0 -right-1 h-2 w-2 rotate-45 bg-white"></div>
+                <div className="absolute top-0 -left-1 h-2 w-2 rotate-45 bg-white"></div>
             </div>
 
             {/* Research Section */}
