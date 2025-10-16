@@ -931,7 +931,7 @@ export default function Sample1() {
                 'To instill ethical standards, social responsibility, and commitment to community service.',
                 'To foster lifelong learning and continuous professional development among graduate students.',
             ],
-            link: '/colleges/cas',
+            link: '/colleges/graduate-school',
         },
     ];
 

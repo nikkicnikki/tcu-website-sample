@@ -59,15 +59,17 @@ export default function Header({ colleges }: HeaderProps) {
             <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
                 {/* Logo + Title */}
                 <div className="flex items-center space-x-3">
-                    <img
-                        src="/storage/images/tcu.png"
-                        alt="TCU Logo"
-                        className={`h-20 w-20 object-contain transition-all duration-500 ${
-                            scrolled
-                                ? 'rounded-full border-[0.5px] border-white bg-white'
-                                : ''
-                        }`}
-                    />
+                    <a href="/">
+                        <img
+                            src="/storage/images/tcu.png"
+                            alt="TCU Logo"
+                            className={`h-20 w-20 object-contain transition-all duration-500 ${
+                                scrolled
+                                    ? 'rounded-full border-[0.5px] border-white bg-white'
+                                    : ''
+                            }`}
+                        />
+                    </a>
                     <div className="flex flex-col">
                         <h1
                             className="text-5xl font-bold tracking-wide text-white"
