@@ -1,10 +1,23 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { motion, useAnimation } from 'framer-motion';
 import { ChevronDown, ChevronRight, Menu, Search, X } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { FaFacebookF, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 
 export default function Sample1() {
+    // Get posts from backend
+    const { posts } = usePage().props;
+
+    // Separate them by type
+    const newsPosts = posts.filter((p) => p.type === 'news');
+    const eventPosts = posts.filter((p) => p.type === 'event');
+
+    // Track which news item is active
+    const [activeNewsIndex, setActiveNewsIndex] = useState(0);
+
+    // The currently active news object
+    const activeNews = newsPosts[activeNewsIndex];
+
     const [showSearch, setShowSearch] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -23,7 +36,7 @@ export default function Sample1() {
     const admissionRef = useRef<HTMLDivElement>(null);
 
     const [activeTab, setActiveTab] = useState<
-        'Overview' | 'Courses' | 'Faculty' | 'College Events'
+        'Overview' | 'Courses' | 'College Officials' | 'College Events'
     >('Overview');
 
     // ✅ Close dropdowns when clicking outside
@@ -175,17 +188,13 @@ export default function Sample1() {
         },
     ];
 
-    // By default, select the first (latest)
-    const [activeIndex, setActiveIndex] = useState(0);
-    const activeNews = news[activeIndex];
-
-    // Auto-transition every 8 seconds
     useEffect(() => {
         const interval = setInterval(() => {
-            setActiveIndex((prev) => (prev + 1) % news.length);
+            setActiveNewsIndex((prev) => (prev + 1) % newsPosts.length);
         }, 8000);
+
         return () => clearInterval(interval);
-    }, [news.length]);
+    }, [newsPosts.length]);
 
     const events = {
         upcoming: [
@@ -1099,103 +1108,153 @@ export default function Sample1() {
                     <div className="flex items-center space-x-4">
                         {/* Desktop Navigation */}
                         <nav className="hidden space-x-6 lg:flex">
-                            <a
-                                href="/"
-                                className="text-white decoration-2 underline-offset-10 hover:underline"
-                            >
-                                Home
-                            </a>
+                            {/* Smooth scroll helper */}
+                            {(() => {
+                                const scrollWithOffset = (id: string) => {
+                                    const el = document.getElementById(id);
+                                    if (el) {
+                                        const header =
+                                            document.querySelector('header');
+                                        const yOffset = header
+                                            ? -header.offsetHeight - 10
+                                            : -120;
+                                        const y =
+                                            el.getBoundingClientRect().top +
+                                            window.scrollY +
+                                            yOffset;
+                                        window.scrollTo({
+                                            top: y,
+                                            behavior: 'smooth',
+                                        });
+                                    }
+                                };
 
-                            {/* Academics Dropdown */}
-                            <div className="relative" ref={academicsRef}>
-                                <a href="#academics">
-                                    <button
-                                        onClick={() => {
-                                            setOpenAcademics(!openAcademics);
-                                            setOpenAdmission(false);
-                                        }}
-                                        className="text-white decoration-2 underline-offset-10 hover:underline"
-                                    >
-                                        Academics ▾
-                                    </button>
-                                </a>
+                                return (
+                                    <>
+                                        {/* Home */}
+                                        <a
+                                            href="#"
+                                            className="text-white decoration-2 underline-offset-10 hover:underline"
+                                        >
+                                            Home
+                                        </a>
 
-                                {openAcademics && (
-                                    <div className="absolute top-full left-0 mt-2 w-72 flex-col bg-white py-2 text-gray-800 shadow-lg">
-                                        {colleges.map((college) => (
-                                            <a
-                                                key={college.name}
-                                                href={college.link}
-                                                className="block px-4 py-2 hover:bg-gray-100"
-                                                onClick={() =>
-                                                    setOpenAcademics(false)
-                                                }
+                                        {/* Academics Dropdown */}
+                                        <div
+                                            className="relative"
+                                            ref={academicsRef}
+                                        >
+                                            <button
+                                                onClick={() => {
+                                                    scrollWithOffset(
+                                                        'academics',
+                                                    );
+                                                    setOpenAcademics(
+                                                        !openAcademics,
+                                                    );
+                                                    setOpenAdmission(false);
+                                                }}
+                                                className="text-white decoration-2 underline-offset-10 hover:underline"
                                             >
-                                                {college.name}
-                                            </a>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
+                                                Academics ▾
+                                            </button>
 
-                            {/* Admission Dropdown */}
-                            <div className="relative" ref={admissionRef}>
-                                <button
-                                    onClick={() => {
-                                        setOpenAdmission(!openAdmission);
-                                        setOpenAcademics(false);
-                                    }}
-                                    className="text-white decoration-2 underline-offset-10 hover:underline"
-                                >
-                                    Admission ▾
-                                </button>
+                                            {openAcademics && (
+                                                <div className="absolute top-full left-0 mt-2 w-72 flex-col bg-white py-2 text-gray-800 shadow-lg">
+                                                    {colleges.map((college) => (
+                                                        <a
+                                                            key={college.name}
+                                                            href={college.link}
+                                                            className="block px-4 py-2 hover:bg-gray-100"
+                                                            onClick={() =>
+                                                                setOpenAcademics(
+                                                                    false,
+                                                                )
+                                                            }
+                                                        >
+                                                            {college.name}
+                                                        </a>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
 
-                                {openAdmission && (
-                                    <div className="absolute top-full left-0 mt-2 w-52 flex-col bg-white py-2 text-gray-800 shadow-lg">
-                                        {[
-                                            {
-                                                name: 'Freshmen',
-                                                link: 'https://docs.google.com/forms/d/e/1FAIpQLSfOII9MxZ5E2rJPE3ghhySBCMtWlqL3PuKCPQcqhFbBQ5CjyQ/closedform',
-                                            },
-                                            {
-                                                name: 'ALS Passers',
-                                                link: 'https://docs.google.com/forms/d/e/1FAIpQLSdtUFGeUi7JIV4DAb2LvJmvSg8wJSGO63RSPp2NvOYoR9si_A/closedform',
-                                            },
-                                        ].map((item) => (
-                                            <a
-                                                key={item.name}
-                                                href={item.link}
-                                                className="block px-4 py-2 hover:bg-gray-100"
-                                                onClick={() =>
-                                                    setOpenAdmission(false)
-                                                }
+                                        {/* Admission Dropdown */}
+                                        <div
+                                            className="relative"
+                                            ref={admissionRef}
+                                        >
+                                            <button
+                                                onClick={() => {
+                                                    setOpenAdmission(
+                                                        !openAdmission,
+                                                    );
+                                                    setOpenAcademics(false);
+                                                }}
+                                                className="text-white decoration-2 underline-offset-10 hover:underline"
                                             >
-                                                {item.name}
-                                            </a>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
+                                                Admission ▾
+                                            </button>
 
-                            <a
-                                href="#research"
-                                className="text-white decoration-2 underline-offset-10 hover:underline"
-                            >
-                                Research
-                            </a>
-                            <a
-                                href="/campus-life"
-                                className="text-white decoration-2 underline-offset-10 hover:underline"
-                            >
-                                Campus Life
-                            </a>
+                                            {openAdmission && (
+                                                <div className="absolute top-full left-0 mt-2 w-52 flex-col bg-white py-2 text-gray-800 shadow-lg">
+                                                    {[
+                                                        {
+                                                            name: 'Freshmen',
+                                                            link: 'https://docs.google.com/forms/d/e/1FAIpQLSfOII9MxZ5E2rJPE3ghhySBCMtWlqL3PuKCPQcqhFbBQ5CjyQ/closedform',
+                                                        },
+                                                        {
+                                                            name: 'ALS Passers',
+                                                            link: 'https://docs.google.com/forms/d/e/1FAIpQLSdtUFGeUi7JIV4DAb2LvJmvSg8wJSGO63RSPp2NvOYoR9si_A/closedform',
+                                                        },
+                                                    ].map((item) => (
+                                                        <a
+                                                            key={item.name}
+                                                            href={item.link}
+                                                            className="block px-4 py-2 hover:bg-gray-100"
+                                                            onClick={() =>
+                                                                setOpenAdmission(
+                                                                    false,
+                                                                )
+                                                            }
+                                                        >
+                                                            {item.name}
+                                                        </a>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
 
-                            <a
-                                href="#about"
-                                className="text-white decoration-2 underline-offset-10 hover:underline"
-                            >
-                                About
-                            </a>
+                                        {/* Research */}
+                                        <button
+                                            onClick={() =>
+                                                scrollWithOffset('research')
+                                            }
+                                            className="text-white decoration-2 underline-offset-10 hover:underline"
+                                        >
+                                            Research
+                                        </button>
+
+                                        {/* Campus Life */}
+                                        <a
+                                            href="/campus-life"
+                                            className="text-white decoration-2 underline-offset-10 hover:underline"
+                                        >
+                                            Campus Life
+                                        </a>
+
+                                        {/* About */}
+                                        <button
+                                            onClick={() =>
+                                                scrollWithOffset('about')
+                                            }
+                                            className="text-white decoration-2 underline-offset-10 hover:underline"
+                                        >
+                                            About
+                                        </button>
+                                    </>
+                                );
+                            })()}
                         </nav>
 
                         {/* Search Button */}
@@ -1511,14 +1570,13 @@ export default function Sample1() {
                 </div>
             </section>
 
-            {/* News Update Heading */}
-
+            {/* News & Updates Heading */}
             <h2 className="mb-0 border-b-4 border-gray-300 bg-gradient-to-r from-red-500 to-red-900 py-2 text-center text-4xl font-bold text-white">
                 NEWS & UPDATES
             </h2>
 
             <section id="newsupdate" className="relative bg-gray-100 py-10">
-                {/* Apply a slight scale to the whole section content */}
+                {/* Background image */}
                 <div className="absolute inset-0 z-0">
                     <img
                         src="/storage/images/buildingbg.png"
@@ -1526,6 +1584,7 @@ export default function Sample1() {
                         className="absolute bottom-0 left-0 h-full w-auto object-cover opacity-30"
                     />
                 </div>
+
                 {/* Background shapes */}
                 <div
                     className="pointer-events-none absolute inset-0"
@@ -1542,43 +1601,37 @@ export default function Sample1() {
                             fill="#991b1b"
                             opacity="0.5"
                         />
-                        {/* <polygon
-                            points="0,800 0,640 140,800"
-                            fill="#dc2626"
-                            opacity="0.5"
-                        /> */}
                     </svg>
                 </div>
 
                 <div className="origin-top scale-[0.9] transform">
-                    {/* Background image */}
-
                     <div className="relative z-10 mx-auto max-w-7xl px-6">
                         <div className="grid gap-8 lg:grid-cols-3">
-                            {/* 📰 Main featured news */}
-                            <a
-                                href={activeNews.link} // make the whole card clickable
-                                className="relative block overflow-hidden shadow-lg lg:col-span-2"
-                            >
-                                <img
-                                    src={activeNews.image}
-                                    alt={activeNews.title}
-                                    className="h-[360px] w-full object-cover transition-all duration-700 ease-in-out"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                                <div className="absolute right-0 bottom-0 left-0 p-5 text-white">
-                                    <span className="mb-2 inline-block rounded-full bg-red-600 px-3 py-1 text-[10px] font-semibold tracking-wide uppercase">
-                                        {activeNews.tag}
-                                    </span>
-                                    <h3 className="text-xl font-bold">
-                                        {activeNews.title}
-                                    </h3>
-                                    <p className="mt-2 text-sm text-gray-200">
-                                        {activeNews.description}
-                                    </p>
-                                    {/* Removed the "View →" link */}
-                                </div>
-                            </a>
+                            {/* 📰 Main Featured News */}
+                            {activeNews && (
+                                <a
+                                    href={activeNews.link}
+                                    className="relative block overflow-hidden shadow-lg lg:col-span-2"
+                                >
+                                    <img
+                                        src={activeNews.image}
+                                        alt={activeNews.title}
+                                        className="h-[360px] w-full object-cover transition-all duration-700 ease-in-out"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                    <div className="absolute right-0 bottom-0 left-0 p-5 text-white">
+                                        <span className="mb-2 inline-block rounded-full bg-red-600 px-3 py-1 text-[10px] font-semibold tracking-wide uppercase">
+                                            {activeNews.tag}
+                                        </span>
+                                        <h3 className="text-xl font-bold">
+                                            {activeNews.title}
+                                        </h3>
+                                        <p className="mt-2 text-sm text-gray-200">
+                                            {activeNews.description}
+                                        </p>
+                                    </div>
+                                </a>
+                            )}
 
                             {/* 📋 Side List */}
                             <div>
@@ -1586,12 +1639,15 @@ export default function Sample1() {
                                     Latest News & Updates
                                 </h2>
                                 <div className="space-y-0">
-                                    {news.map((item, idx) => (
+                                    {/* Limit to first 4 posts */}
+                                    {newsPosts.slice(0, 4).map((item, idx) => (
                                         <div
                                             key={idx}
-                                            onClick={() => setActiveIndex(idx)}
+                                            onClick={() =>
+                                                setActiveNewsIndex(idx)
+                                            }
                                             className={`relative z-20 flex cursor-pointer items-start gap-3 border border-gray-200 bg-white p-3 transition hover:bg-red-50 ${
-                                                activeIndex === idx
+                                                activeNewsIndex === idx
                                                     ? 'border-red-500 bg-red-50'
                                                     : ''
                                             }`}
@@ -1599,7 +1655,7 @@ export default function Sample1() {
                                             {/* Left marker */}
                                             <div
                                                 className={`mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full ${
-                                                    activeIndex === idx
+                                                    activeNewsIndex === idx
                                                         ? 'bg-red-600'
                                                         : 'bg-gray-400'
                                                 }`}
@@ -1610,7 +1666,8 @@ export default function Sample1() {
                                                 <div className="flex items-center justify-between">
                                                     <h4
                                                         className={`text-md font-semibold ${
-                                                            activeIndex === idx
+                                                            activeNewsIndex ===
+                                                            idx
                                                                 ? 'text-red-700'
                                                                 : 'text-gray-800'
                                                         }`}
@@ -1625,7 +1682,7 @@ export default function Sample1() {
                                                     {item.date}
                                                 </p>
                                                 <a
-                                                    href={item.link}
+                                                    href={`/posts/news/${item.slug}`}
                                                     className="text-[13px] font-semibold text-red-500 hover:text-red-700"
                                                 >
                                                     View →
@@ -1637,7 +1694,7 @@ export default function Sample1() {
                                     {/* View More link */}
                                     <div className="pt-2 text-right">
                                         <a
-                                            href="#"
+                                            href="/posts/news"
                                             className="text-[13px] font-medium text-red-600 hover:underline"
                                         >
                                             View More →
@@ -1684,178 +1741,269 @@ export default function Sample1() {
                 </div>
 
                 <div className="mx-auto max-w-7xl">
-                    {/* Current Event */}
-                    <div className="mb-10 lg:col-span-2">
-                        {events.current.length > 0 ? (
-                            events.current.map((event, idx) => {
-                                const { day, month } = formatDate(event.date);
-                                const slug = event.title
-                                    .toLowerCase()
-                                    .replace(/[^a-z0-9]+/g, '-')
-                                    .replace(/(^-|-$)/g, '');
-                                return (
+                    {/* --- Separate events by date --- */}
+                    {(() => {
+                        const now = new Date();
+
+                        const currentEvents = eventPosts.filter(
+                            (e) =>
+                                new Date(e.date).toDateString() ===
+                                now.toDateString(),
+                        );
+
+                        const upcomingEvents = eventPosts
+                            .filter((e) => new Date(e.date) > now)
+                            .sort(
+                                (a, b) =>
+                                    new Date(a.date).getTime() -
+                                    new Date(b.date).getTime(),
+                            );
+
+                        const pastEvents = eventPosts
+                            .filter((e) => new Date(e.date) < now)
+                            .sort(
+                                (a, b) =>
+                                    new Date(b.date).getTime() -
+                                    new Date(a.date).getTime(),
+                            );
+
+                        const formatDate = (dateStr) => {
+                            const date = new Date(dateStr);
+                            const day = date.getDate();
+                            const month = date.toLocaleString('default', {
+                                month: 'short',
+                            });
+                            return { day, month };
+                        };
+
+                        return (
+                            <>
+                                {/* CURRENT EVENT */}
+                                <div className="mb-10 lg:col-span-2">
+                                    {currentEvents.length > 0 ? (
+                                        currentEvents.map((event, idx) => {
+                                            const { day, month } = formatDate(
+                                                event.date,
+                                            );
+                                            return (
+                                                <a
+                                                    key={idx}
+                                                    href={`/posts/event/${event.slug}`}
+                                                    className="group relative block overflow-hidden shadow-lg transition-all duration-300 hover:scale-[1.01]"
+                                                >
+                                                    <img
+                                                        src={event.image}
+                                                        alt={event.title}
+                                                        className="max-h-[28rem] w-full bg-white object-contain"
+                                                    />
+                                                    <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 to-transparent">
+                                                        <div className="p-5 text-red-500">
+                                                            <h3 className="truncate bg-gradient-to-r from-white to-transparent px-2 text-sm font-bold">
+                                                                {event.title}
+                                                            </h3>
+                                                            <p className="truncate bg-gradient-to-r from-black to-transparent px-4 text-base text-gray-200">
+                                                                {
+                                                                    event.description
+                                                                }
+                                                            </p>
+                                                            {event.tag && (
+                                                                <span className="mt-2 inline-block rounded-sm bg-red-700 px-3 py-1 text-xs text-white uppercase">
+                                                                    {event.tag}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <div className="absolute top-0 left-0 bg-red-700 px-6 py-4 text-center shadow-md">
+                                                        <div className="text-4xl font-bold text-white">
+                                                            {day}
+                                                        </div>
+                                                        <div className="text-lg text-white uppercase">
+                                                            {month}
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            );
+                                        })
+                                    ) : (
+                                        // 💡 "No current event" placeholder
+                                        <div className="relative flex h-[22rem] w-full flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gradient-to-b from-gray-50 to-white text-center shadow-inner transition hover:shadow-md">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="mb-3 h-16 w-16 animate-pulse text-gray-400"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={1.5}
+                                                    d="M12 8v4l3 3m6 1V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2z"
+                                                />
+                                            </svg>
+                                            <p className="text-lg font-semibold text-gray-700">
+                                                No Current Events
+                                            </p>
+                                            <p className="mt-1 text-sm text-gray-500">
+                                                Stay tuned for upcoming
+                                                announcements!
+                                            </p>
+                                            <button
+                                                onClick={() => {
+                                                    const el =
+                                                        document.getElementById(
+                                                            'upcoming-events',
+                                                        );
+                                                    if (el) {
+                                                        const yOffset = -120; // adjust this to your fixed header height
+                                                        const y =
+                                                            el.getBoundingClientRect()
+                                                                .top +
+                                                            window.scrollY +
+                                                            yOffset;
+                                                        window.scrollTo({
+                                                            top: y,
+                                                            behavior: 'smooth',
+                                                        });
+                                                    }
+                                                }}
+                                                className="mt-5 rounded-md bg-red-700 px-5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-red-800 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none"
+                                            >
+                                                View Upcoming Events
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* UPCOMING EVENTS */}
+                                <div
+                                    className="mb-3 flex items-center justify-between"
+                                    id="upcoming-events"
+                                >
+                                    <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
+                                        <span className="rounded-sm bg-red-700 px-3 py-1 text-sm text-white uppercase">
+                                            Upcoming
+                                        </span>
+                                        <span>Events</span>
+                                    </h2>
+                                </div>
+
+                                <div className="mb-6 grid grid-cols-2 gap-[2px] sm:grid-cols-3 lg:grid-cols-5">
+                                    {upcomingEvents
+                                        .slice(0, 5)
+                                        .map((event, idx) => {
+                                            const { day, month } = formatDate(
+                                                event.date,
+                                            );
+                                            return (
+                                                <a
+                                                    key={idx}
+                                                    href={`/posts/event/${event.slug}`}
+                                                    className="group relative block overflow-hidden shadow-md transition-all duration-300 hover:opacity-90"
+                                                >
+                                                    <img
+                                                        src={event.image}
+                                                        alt={event.title}
+                                                        className="h-36 w-full object-cover transition duration-500 group-hover:scale-105"
+                                                    />
+                                                    <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent">
+                                                        <div className="p-2 text-red-500 shadow-md">
+                                                            <h3 className="truncate bg-white/90 px-2 text-sm font-bold">
+                                                                {event.title}
+                                                            </h3>
+                                                            {event.tag && (
+                                                                <span className="mt-1 inline-block rounded-sm bg-red-700 px-2 py-[2px] text-[10px] text-white uppercase">
+                                                                    {event.tag}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <div className="absolute top-0 left-0 bg-white px-3 py-1 text-center shadow-md">
+                                                        <div className="text-lg font-bold text-red-700">
+                                                            {day}
+                                                        </div>
+                                                        <div className="text-xs text-gray-600 uppercase">
+                                                            {month}
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            );
+                                        })}
+                                </div>
+
+                                {/* ALL EVENTS */}
+                                <div className="mb-3 flex items-center justify-between">
+                                    <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
+                                        <span className="rounded-sm bg-red-700 px-3 py-1 text-sm text-white uppercase">
+                                            All
+                                        </span>
+                                        <span>Events</span>
+                                    </h2>
                                     <a
-                                        key={idx}
-                                        href={`/events/${slug}`}
-                                        className="group relative block overflow-hidden shadow-lg transition-all duration-300 hover:scale-[1.01]"
+                                        href="/posts/event"
+                                        className="text-sm font-medium text-red-700 hover:underline"
                                     >
-                                        <img
-                                            src={event.image}
-                                            alt={event.title}
-                                            className="max-h-[28rem] w-full bg-white object-contain"
-                                        />
-                                        <div className="absolute inset-0 flex flex-col justify-end">
-                                            <div className="p-5 text-red-500 shadow-md">
-                                                <h3 className="truncate bg-gradient-to-r from-white to-transparent px-2 text-sm font-bold">
-                                                    {event.title}
-                                                </h3>
-                                                <p className="truncate bg-gradient-to-r from-black to-transparent px-4 text-base text-gray-200">
-                                                    {event.description}
-                                                </p>
-                                                {event.tag && (
-                                                    <span className="mt-2 inline-block rounded-sm bg-red-700 px-3 py-1 text-xs text-white uppercase">
-                                                        {event.tag}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </div>
-                                        <div className="absolute top-0 left-0 bg-red-700 px-6 py-4 text-center shadow-md">
-                                            <div className="text-4xl font-bold text-white">
-                                                {day}
-                                            </div>
-                                            <div className="text-lg text-gray-600 text-white uppercase">
-                                                {month}
-                                            </div>
-                                        </div>
+                                        View More →
                                     </a>
-                                );
-                            })
-                        ) : (
-                            <p className="text-gray-500">No current event</p>
-                        )}
-                    </div>
+                                </div>
 
-                    {/* Upcoming Events */}
-                    <div className="mb-3 flex items-center justify-between">
-                        <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
-                            <span className="rounded-sm bg-red-700 px-3 py-1 text-sm text-white uppercase">
-                                Upcoming
-                            </span>
-                            <span>Events</span>
-                        </h2>
-                    </div>
-
-                    <div className="mb-6 grid grid-cols-2 gap-[2px] sm:grid-cols-3 lg:grid-cols-5">
-                        {events.upcoming.slice(0, 5).map((event, idx) => {
-                            const { day, month } = formatDate(event.date);
-                            const slug = event.title
-                                .toLowerCase()
-                                .replace(/[^a-z0-9]+/g, '-')
-                                .replace(/(^-|-$)/g, '');
-                            return (
-                                <a
-                                    key={idx}
-                                    href={`/events/${slug}`}
-                                    className="group relative block overflow-hidden shadow-md transition-all duration-300 hover:opacity-90"
-                                >
-                                    <img
-                                        src={event.image}
-                                        alt={event.title}
-                                        className="h-36 w-full object-cover transition duration-500 group-hover:scale-105"
-                                    />
-                                    <div className="absolute inset-0 flex flex-col justify-end">
-                                        <div className="p-2 text-red-500 shadow-md">
-                                            <h3 className="truncate bg-white px-2 text-sm font-bold">
-                                                {event.title}
-                                            </h3>
-                                            {event.tag && (
-                                                <span className="mt-1 inline-block rounded-sm bg-red-700 px-2 py-[2px] text-[10px] text-white uppercase">
-                                                    {event.tag}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="absolute top-0 left-0 bg-white px-3 py-1 text-center shadow-md">
-                                        <div className="text-lg font-bold text-red-700">
-                                            {day}
-                                        </div>
-                                        <div className="text-xs text-gray-600 uppercase">
-                                            {month}
-                                        </div>
-                                    </div>
-                                </a>
-                            );
-                        })}
-                    </div>
-
-                    {/* All Events */}
-                    <div className="mb-3 flex items-center justify-between">
-                        <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
-                            <span className="rounded-sm bg-red-700 px-3 py-1 text-sm text-white uppercase">
-                                All
-                            </span>
-                            <span>Events</span>
-                        </h2>
-                        <a
-                            href="/events"
-                            className="text-sm font-medium text-red-700 hover:underline"
-                        >
-                            View More →
-                        </a>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-[2px] sm:grid-cols-3 lg:grid-cols-5">
-                        {events.all.slice(0, 5).map((event, idx) => {
-                            const { day, month } = formatDate(event.date);
-                            const slug = event.title
-                                .toLowerCase()
-                                .replace(/[^a-z0-9]+/g, '-')
-                                .replace(/(^-|-$)/g, '');
-                            return (
-                                <a
-                                    key={idx}
-                                    href={`/events/${slug}`}
-                                    className="group relative block overflow-hidden shadow-md transition-all duration-300 hover:opacity-90"
-                                >
-                                    <img
-                                        src={event.image}
-                                        alt={event.title}
-                                        className="h-36 w-full object-cover transition duration-500 group-hover:scale-105"
-                                    />
-                                    <div className="absolute inset-0 flex flex-col justify-end">
-                                        <div className="p-2 text-red-500 shadow-md">
-                                            <h3 className="truncate bg-white px-2 text-sm font-bold">
-                                                {event.title}
-                                            </h3>
-                                            {event.tag && (
-                                                <span className="mt-1 inline-block rounded-sm bg-red-700 px-2 py-[2px] text-[10px] text-white uppercase">
-                                                    {event.tag}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="absolute top-0 left-0 bg-white px-3 py-1 text-center shadow-md">
-                                        <div className="text-lg font-bold text-red-700">
-                                            {day}
-                                        </div>
-                                        <div className="text-xs text-gray-600 uppercase">
-                                            {month}
-                                        </div>
-                                    </div>
-                                </a>
-                            );
-                        })}
-                    </div>
+                                <div className="grid grid-cols-2 gap-[2px] sm:grid-cols-3 lg:grid-cols-5">
+                                    {pastEvents
+                                        .slice(0, 5)
+                                        .map((event, idx) => {
+                                            const { day, month } = formatDate(
+                                                event.date,
+                                            );
+                                            return (
+                                                <a
+                                                    key={idx}
+                                                    href={`/posts/event/${event.slug}`}
+                                                    className="group relative block overflow-hidden shadow-md transition-all duration-300 hover:opacity-90"
+                                                >
+                                                    <img
+                                                        src={event.image}
+                                                        alt={event.title}
+                                                        className="h-36 w-full object-cover transition duration-500 group-hover:scale-105"
+                                                    />
+                                                    <div className="absolute inset-0 flex flex-col justify-end">
+                                                        <div className="p-2 text-red-500 shadow-md">
+                                                            <h3 className="truncate bg-white px-2 text-sm font-bold">
+                                                                {event.title}
+                                                            </h3>
+                                                            {event.tag && (
+                                                                <span className="mt-1 inline-block rounded-sm bg-red-700 px-2 py-[2px] text-[10px] text-white uppercase">
+                                                                    {event.tag}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <div className="absolute top-0 left-0 bg-white px-3 py-1 text-center shadow-md">
+                                                        <div className="text-lg font-bold text-red-700">
+                                                            {day}
+                                                        </div>
+                                                        <div className="text-xs text-gray-600 uppercase">
+                                                            {month}
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            );
+                                        })}
+                                </div>
+                            </>
+                        );
+                    })()}
                 </div>
             </section>
 
-            <h2 className="mb-0 border-b-4 border-gray-300 bg-gradient-to-r from-red-500 to-red-900 py-2 text-center text-4xl font-bold text-white">
+            <h2
+                id="academics"
+                className="mb-0 border-b-4 border-gray-300 bg-gradient-to-r from-red-500 to-red-900 py-2 text-center text-4xl font-bold text-white"
+            >
                 ACADEMICS
             </h2>
 
             {/* Academics Section */}
             <section
-                id="academics"
                 className="relative overflow-hidden bg-gray-100 px-8 py-10"
                 style={{
                     fontFamily: "'Montserrat', sans-serif",
@@ -1932,7 +2080,7 @@ export default function Sample1() {
                             {[
                                 'Overview',
                                 'Courses',
-                                'Faculty',
+                                'College Officials',
                                 'College Events',
                             ].map((tab) => (
                                 <button
@@ -2186,10 +2334,10 @@ export default function Sample1() {
                                 </div>
                             )}
                             {/* FACULTY */}
-                            {activeTab === 'Faculty' && (
+                            {activeTab === 'College Officials' && (
                                 <div className="text-center">
                                     <h3 className="mb-2 text-lg font-bold text-red-700 uppercase">
-                                        Faculty
+                                        College Officials
                                     </h3>
                                     <img
                                         src={colleges[selected].featuredImage}
@@ -2263,7 +2411,10 @@ export default function Sample1() {
                 </div>
             </section>
 
-            <h2 className="relative mb-0 bg-gradient-to-r from-red-500 to-red-900 py-2 text-center text-4xl font-bold text-white">
+            <h2
+                id="research"
+                className="relative mb-0 bg-gradient-to-r from-red-500 to-red-900 py-2 text-center text-4xl font-bold text-white"
+            >
                 RESEARCH
             </h2>
 
@@ -2284,10 +2435,7 @@ export default function Sample1() {
             </div>
 
             {/* Research Section */}
-            <section
-                id="research"
-                className="font-montserrat relative overflow-hidden bg-white px-6 pt-10 pb-16"
-            >
+            <section className="font-montserrat relative overflow-hidden bg-white px-6 pt-10 pb-16">
                 <div className="mx-auto max-w-7xl">
                     <div className="grid gap-8 md:grid-cols-3">
                         {researchData.map((research, idx) => (
