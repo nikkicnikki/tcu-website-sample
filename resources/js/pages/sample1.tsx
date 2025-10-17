@@ -1741,7 +1741,6 @@ export default function Sample1() {
                 </div>
 
                 <div className="mx-auto max-w-7xl">
-                    {/* --- Separate events by date --- */}
                     {(() => {
                         const now = new Date();
 
@@ -1773,221 +1772,323 @@ export default function Sample1() {
                             const month = date.toLocaleString('default', {
                                 month: 'short',
                             });
-                            return { day, month };
+                            const year = date.getFullYear();
+                            const isToday =
+                                date.toDateString() === now.toDateString();
+                            const isUpcoming = date > now;
+
+                            const color = isToday
+                                ? 'bg-green-600'
+                                : isUpcoming
+                                  ? 'bg-yellow-500'
+                                  : 'bg-red-700';
+
+                            return { day, month, year, color };
                         };
 
                         return (
                             <>
                                 {/* CURRENT EVENT */}
                                 <div className="mb-10 lg:col-span-2">
-                                    {currentEvents.length > 0 ? (
-                                        currentEvents.map((event, idx) => {
-                                            const { day, month } = formatDate(
-                                                event.date,
+                                    {(() => {
+                                        // Sort events by date
+                                        const sortedEvents = [
+                                            ...eventPosts,
+                                        ].sort(
+                                            (a, b) =>
+                                                new Date(a.date).getTime() -
+                                                new Date(b.date).getTime(),
+                                        );
+
+                                        const now = new Date();
+
+                                        const currentEvents =
+                                            sortedEvents.filter(
+                                                (e) =>
+                                                    new Date(
+                                                        e.date,
+                                                    ).toDateString() ===
+                                                    now.toDateString(),
                                             );
-                                            return (
-                                                <a
-                                                    key={idx}
-                                                    href={`/posts/event/${event.slug}`}
-                                                    className="group relative block overflow-hidden shadow-lg transition-all duration-300 hover:scale-[1.01]"
-                                                >
-                                                    <img
-                                                        src={event.image}
-                                                        alt={event.title}
-                                                        className="max-h-[28rem] w-full bg-white object-contain"
-                                                    />
-                                                    <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 to-transparent">
-                                                        <div className="p-5 text-red-500">
-                                                            <h3 className="truncate bg-gradient-to-r from-white to-transparent px-2 text-sm font-bold">
+                                        const upcomingEvents =
+                                            sortedEvents.filter(
+                                                (e) => new Date(e.date) > now,
+                                            );
+
+                                        // If no current, use the nearest upcoming event
+                                        const featuredEvents =
+                                            currentEvents.length > 0
+                                                ? currentEvents
+                                                : upcomingEvents.length > 0
+                                                  ? [upcomingEvents[0]]
+                                                  : [];
+
+                                        return featuredEvents.length > 0 ? (
+                                            featuredEvents.map((event, idx) => {
+                                                const date = new Date(
+                                                    event.date,
+                                                );
+                                                const day = date.getDate();
+                                                const month =
+                                                    date.toLocaleString(
+                                                        'default',
+                                                        { month: 'short' },
+                                                    );
+                                                const year = date.getFullYear();
+
+                                                const isToday =
+                                                    date.toDateString() ===
+                                                    now.toDateString();
+                                                const isUpcoming = date > now;
+
+                                                // Color logic for the calendar top bar
+                                                const color = isToday
+                                                    ? 'bg-green-600'
+                                                    : isUpcoming
+                                                      ? 'bg-yellow-500'
+                                                      : 'bg-red-700';
+
+                                                return (
+                                                    <a
+                                                        key={idx}
+                                                        href={`/posts/event/${event.slug}`}
+                                                        className="group relative block overflow-hidden rounded-lg shadow-xl transition-all duration-500 hover:scale-[1.01]"
+                                                    >
+                                                        {/* Background image */}
+                                                        <img
+                                                            src={event.image}
+                                                            alt={event.title}
+                                                            className="h-[30rem] w-full object-cover brightness-[0.85] transition duration-500 group-hover:brightness-100"
+                                                        />
+
+                                                        {/* Gradient Overlay */}
+                                                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+
+                                                        {/* 🗓️ Calendar-style date box */}
+                                                        <div className="absolute top-5 left-5 w-16 overflow-hidden rounded-md bg-white text-center shadow-md">
+                                                            <div
+                                                                className={`${color} px-2 py-1 text-xs font-bold text-white uppercase`}
+                                                            >
+                                                                {month}
+                                                            </div>
+                                                            <div className="bg-white px-2 py-1">
+                                                                <div className="text-2xl leading-none font-extrabold text-gray-800">
+                                                                    {day}
+                                                                </div>
+                                                                <div className="text-[10px] text-gray-500">
+                                                                    {year}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* 🏷️ Status Badge */}
+                                                        <div
+                                                            className={`absolute top-5 right-5 rounded-full px-4 py-1 text-xs font-semibold text-white uppercase shadow-md ${
+                                                                isToday
+                                                                    ? 'bg-green-600'
+                                                                    : isUpcoming
+                                                                      ? 'bg-yellow-500 text-gray-800'
+                                                                      : 'bg-red-700'
+                                                            }`}
+                                                        >
+                                                            {isToday
+                                                                ? 'Happening Now'
+                                                                : isUpcoming
+                                                                  ? 'Upcoming Event'
+                                                                  : 'Past Event'}
+                                                        </div>
+
+                                                        {/* ✨ Event Details */}
+                                                        <div className="absolute bottom-0 w-full p-6 text-white">
+                                                            <h3 className="mb-2 bg-gradient-to-r from-red-700/80 to-transparent px-2 py-1 text-2xl font-bold shadow-md backdrop-blur-sm">
                                                                 {event.title}
                                                             </h3>
-                                                            <p className="truncate bg-gradient-to-r from-black to-transparent px-4 text-base text-gray-200">
+                                                            <p className="mb-3 line-clamp-2 max-w-3xl bg-gradient-to-r from-black/70 to-transparent px-3 text-sm text-gray-200 backdrop-blur-sm">
                                                                 {
                                                                     event.description
                                                                 }
                                                             </p>
                                                             {event.tag && (
-                                                                <span className="mt-2 inline-block rounded-sm bg-red-700 px-3 py-1 text-xs text-white uppercase">
+                                                                <span className="inline-block rounded-sm bg-red-700 px-3 py-1 text-xs font-semibold text-white uppercase shadow-md">
                                                                     {event.tag}
                                                                 </span>
                                                             )}
                                                         </div>
-                                                    </div>
-                                                    <div className="absolute top-0 left-0 bg-red-700 px-6 py-4 text-center shadow-md">
-                                                        <div className="text-4xl font-bold text-white">
-                                                            {day}
-                                                        </div>
-                                                        <div className="text-lg text-white uppercase">
-                                                            {month}
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            );
-                                        })
-                                    ) : (
-                                        // 💡 "No current event" placeholder
-                                        <div className="relative flex h-[22rem] w-full flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gradient-to-b from-gray-50 to-white text-center shadow-inner transition hover:shadow-md">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="mb-3 h-16 w-16 animate-pulse text-gray-400"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={1.5}
-                                                    d="M12 8v4l3 3m6 1V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2z"
-                                                />
-                                            </svg>
-                                            <p className="text-lg font-semibold text-gray-700">
-                                                No Current Events
-                                            </p>
-                                            <p className="mt-1 text-sm text-gray-500">
-                                                Stay tuned for upcoming
-                                                announcements!
-                                            </p>
-                                            <button
-                                                onClick={() => {
-                                                    const el =
-                                                        document.getElementById(
-                                                            'upcoming-events',
-                                                        );
-                                                    if (el) {
-                                                        const yOffset = -120; // adjust this to your fixed header height
-                                                        const y =
-                                                            el.getBoundingClientRect()
-                                                                .top +
-                                                            window.scrollY +
-                                                            yOffset;
-                                                        window.scrollTo({
-                                                            top: y,
-                                                            behavior: 'smooth',
-                                                        });
-                                                    }
-                                                }}
-                                                className="mt-5 rounded-md bg-red-700 px-5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-red-800 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none"
-                                            >
-                                                View Upcoming Events
-                                            </button>
+                                                    </a>
+                                                );
+                                            })
+                                        ) : (
+                                            // No events fallback
+                                            <div className="relative flex h-[22rem] w-full flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gradient-to-b from-gray-50 to-white text-center shadow-inner transition hover:shadow-md">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="mb-3 h-16 w-16 animate-pulse text-gray-400"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke="currentColor"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={1.5}
+                                                        d="M12 8v4l3 3m6 1V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2z"
+                                                    />
+                                                </svg>
+                                                <p className="text-lg font-semibold text-gray-700">
+                                                    No Events Available
+                                                </p>
+                                                <p className="mt-1 text-sm text-gray-500">
+                                                    Stay tuned for new
+                                                    announcements!
+                                                </p>
+                                            </div>
+                                        );
+                                    })()}
+                                </div>
+
+                                {/* EVENTS CALENDAR */}
+                                <div className="mb-6" id="events-calendar">
+                                    {/* Header */}
+                                    <div className="mb-3 flex items-center justify-between">
+                                        <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
+                                            <span className="rounded-sm bg-red-700 px-3 py-1 text-sm text-white uppercase">
+                                                Events
+                                            </span>
+                                            <span>Calendar</span>
+                                        </h2>
+                                        <a
+                                            href="/posts/event"
+                                            className="text-sm font-medium text-red-700 hover:underline"
+                                        >
+                                            View All →
+                                        </a>
+                                    </div>
+
+                                    {/* Legend */}
+                                    <div className="mb-4 flex flex-wrap items-center gap-4 text-sm text-gray-700">
+                                        <div className="flex items-center gap-1">
+                                            <span className="h-3 w-3 rounded-sm bg-green-600"></span>
+                                            <span>Happening Now</span>
                                         </div>
-                                    )}
-                                </div>
+                                        <div className="flex items-center gap-1">
+                                            <span className="h-3 w-3 rounded-sm bg-yellow-500"></span>
+                                            <span>Upcoming</span>
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                            <span className="h-3 w-3 rounded-sm bg-red-700"></span>
+                                            <span>Past Events</span>
+                                        </div>
+                                    </div>
 
-                                {/* UPCOMING EVENTS */}
-                                <div
-                                    className="mb-3 flex items-center justify-between"
-                                    id="upcoming-events"
-                                >
-                                    <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
-                                        <span className="rounded-sm bg-red-700 px-3 py-1 text-sm text-white uppercase">
-                                            Upcoming
-                                        </span>
-                                        <span>Events</span>
-                                    </h2>
-                                </div>
+                                    {/* Calendar Grid */}
+                                    {(() => {
+                                        const now = new Date();
 
-                                <div className="mb-6 grid grid-cols-2 gap-[2px] sm:grid-cols-3 lg:grid-cols-5">
-                                    {upcomingEvents
-                                        .slice(0, 5)
-                                        .map((event, idx) => {
-                                            const { day, month } = formatDate(
-                                                event.date,
-                                            );
-                                            return (
-                                                <a
-                                                    key={idx}
-                                                    href={`/posts/event/${event.slug}`}
-                                                    className="group relative block overflow-hidden shadow-md transition-all duration-300 hover:opacity-90"
-                                                >
-                                                    <img
-                                                        src={event.image}
-                                                        alt={event.title}
-                                                        className="h-36 w-full object-cover transition duration-500 group-hover:scale-105"
-                                                    />
-                                                    <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent">
-                                                        <div className="p-2 text-red-500 shadow-md">
-                                                            <h3 className="truncate bg-white/90 px-2 text-sm font-bold">
-                                                                {event.title}
-                                                            </h3>
-                                                            {event.tag && (
-                                                                <span className="mt-1 inline-block rounded-sm bg-red-700 px-2 py-[2px] text-[10px] text-white uppercase">
-                                                                    {event.tag}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    <div className="absolute top-0 left-0 bg-white px-3 py-1 text-center shadow-md">
-                                                        <div className="text-lg font-bold text-red-700">
-                                                            {day}
-                                                        </div>
-                                                        <div className="text-xs text-gray-600 uppercase">
-                                                            {month}
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            );
-                                        })}
-                                </div>
+                                        // Sort by date ascending
+                                        const sortedEvents = [
+                                            ...eventPosts,
+                                        ].sort(
+                                            (a, b) =>
+                                                new Date(a.date).getTime() -
+                                                new Date(b.date).getTime(),
+                                        );
 
-                                {/* ALL EVENTS */}
-                                <div className="mb-3 flex items-center justify-between">
-                                    <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
-                                        <span className="rounded-sm bg-red-700 px-3 py-1 text-sm text-white uppercase">
-                                            All
-                                        </span>
-                                        <span>Events</span>
-                                    </h2>
-                                    <a
-                                        href="/posts/event"
-                                        className="text-sm font-medium text-red-700 hover:underline"
-                                    >
-                                        View More →
-                                    </a>
-                                </div>
+                                        const allEvents = sortedEvents.map(
+                                            (event) => {
+                                                const date = new Date(
+                                                    event.date,
+                                                );
+                                                const isToday =
+                                                    date.toDateString() ===
+                                                    now.toDateString();
+                                                const isUpcoming = date > now;
 
-                                <div className="grid grid-cols-2 gap-[2px] sm:grid-cols-3 lg:grid-cols-5">
-                                    {pastEvents
-                                        .slice(0, 5)
-                                        .map((event, idx) => {
-                                            const { day, month } = formatDate(
-                                                event.date,
-                                            );
-                                            return (
-                                                <a
-                                                    key={idx}
-                                                    href={`/posts/event/${event.slug}`}
-                                                    className="group relative block overflow-hidden shadow-md transition-all duration-300 hover:opacity-90"
-                                                >
-                                                    <img
-                                                        src={event.image}
-                                                        alt={event.title}
-                                                        className="h-36 w-full object-cover transition duration-500 group-hover:scale-105"
-                                                    />
-                                                    <div className="absolute inset-0 flex flex-col justify-end">
-                                                        <div className="p-2 text-red-500 shadow-md">
-                                                            <h3 className="truncate bg-white px-2 text-sm font-bold">
-                                                                {event.title}
-                                                            </h3>
-                                                            {event.tag && (
-                                                                <span className="mt-1 inline-block rounded-sm bg-red-700 px-2 py-[2px] text-[10px] text-white uppercase">
-                                                                    {event.tag}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    <div className="absolute top-0 left-0 bg-white px-3 py-1 text-center shadow-md">
-                                                        <div className="text-lg font-bold text-red-700">
-                                                            {day}
-                                                        </div>
-                                                        <div className="text-xs text-gray-600 uppercase">
-                                                            {month}
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            );
-                                        })}
+                                                const color = isToday
+                                                    ? 'bg-green-600'
+                                                    : isUpcoming
+                                                      ? 'bg-yellow-500'
+                                                      : 'bg-red-700';
+
+                                                return {
+                                                    ...event,
+                                                    color,
+                                                    date,
+                                                };
+                                            },
+                                        );
+
+                                        return (
+                                            <div className="grid grid-cols-2 gap-[2px] sm:grid-cols-3 lg:grid-cols-5">
+                                                {allEvents.map((event, idx) => {
+                                                    const day =
+                                                        event.date.getDate();
+                                                    const month =
+                                                        event.date.toLocaleString(
+                                                            'default',
+                                                            {
+                                                                month: 'short',
+                                                            },
+                                                        );
+                                                    const year =
+                                                        event.date.getFullYear();
+
+                                                    return (
+                                                        <a
+                                                            key={idx}
+                                                            href={`/posts/event/${event.slug}`}
+                                                            className="group relative block overflow-hidden shadow-md transition-all duration-300 hover:opacity-90"
+                                                        >
+                                                            {/* Image */}
+                                                            <img
+                                                                src={
+                                                                    event.image
+                                                                }
+                                                                alt={
+                                                                    event.title
+                                                                }
+                                                                className="h-40 w-full object-cover transition duration-500 group-hover:scale-105"
+                                                            />
+
+                                                            {/* Overlay gradient */}
+                                                            <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 to-transparent">
+                                                                <div className="p-2 text-white shadow-md">
+                                                                    <h3 className="truncate bg-white/90 px-2 text-sm font-bold text-gray-800">
+                                                                        {
+                                                                            event.title
+                                                                        }
+                                                                    </h3>
+                                                                    {event.tag && (
+                                                                        <span className="mt-1 inline-block rounded-sm bg-red-700 px-2 py-[2px] text-[10px] text-white uppercase">
+                                                                            {
+                                                                                event.tag
+                                                                            }
+                                                                        </span>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+
+                                                            {/* 🗓️ Calendar date box */}
+                                                            <div className="absolute top-2 left-2 w-14 overflow-hidden rounded-md bg-white text-center shadow-md">
+                                                                <div
+                                                                    className={`${event.color} px-2 py-1 text-xs font-bold text-white uppercase`}
+                                                                >
+                                                                    {month}
+                                                                </div>
+                                                                <div className="bg-white px-2 py-1">
+                                                                    <div className="text-lg leading-none font-extrabold text-gray-800">
+                                                                        {day}
+                                                                    </div>
+                                                                    <div className="text-[10px] text-gray-500">
+                                                                        {year}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    );
+                                                })}
+                                            </div>
+                                        );
+                                    })()}
                                 </div>
                             </>
                         );

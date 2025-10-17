@@ -26,8 +26,8 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        // Inertia::share([
-        //     'colleges' => fn() => app(CollegeController::class)->colleges(),
-        // ]);
+        Inertia::share([
+            'colleges' => fn() => app(CollegeController::class)->colleges(),
+        ]);
     }
 }
