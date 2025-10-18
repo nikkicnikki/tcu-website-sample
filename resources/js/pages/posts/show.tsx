@@ -77,89 +77,96 @@ export default function CampusLife() {
             {/* Header */}
             <Header colleges={colleges} />
             <div className="pt-[90px]">
-                {/* Hero Section */}
-                <div className="relative h-[28rem] w-full overflow-hidden">
+                {/* HERO SECTION (cropped bg version) */}
+                <div className="relative h-[20rem] w-full overflow-hidden">
                     <img
                         src={post.image}
                         alt={post.title}
-                        className="h-full w-full object-cover brightness-75"
+                        className="absolute inset-0 h-full w-full object-cover brightness-50"
                     />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-transparent"></div>
                 </div>
 
-                {/* Floating Image + Calendar */}
-                <div className="relative z-10 mx-auto -mt-50 flex max-w-5xl flex-col items-center justify-center gap-6 px-6 sm:flex-row sm:items-end sm:justify-center">
-                    {/* Full Image (Centered, no rounding) */}
-                    <div className="relative mx-auto w-full overflow-hidden bg-transparent shadow-xl sm:w-[80%]">
-                        {/* Full image */}
+                {/* MAIN CONTENT SECTION */}
+                <div className="mx-auto max-w-5xl bg-white px-6 py-16 text-center">
+                    {/* 🌆 FEATURE IMAGE */}
+                    <div className="relative mx-auto mb-8 w-full overflow-hidden">
                         <img
                             src={post.image}
                             alt={post.title}
-                            className="h-[28rem] w-full object-cover object-center"
+                            className="mx-auto max-h-[40rem] w-auto object-contain shadow-lg"
                         />
+                    </div>
 
-                        {/* Overlay label */}
-                        <div className="justify-left absolute inset-0 left-5 flex items-end pb-4">
-                            <span className="rounded-full bg-red-700/90 px-4 py-1 text-xs font-semibold tracking-widest text-white uppercase shadow-md backdrop-blur-sm">
-                                {post.type === 'news'
-                                    ? 'News & Updates'
-                                    : 'Event'}
-                            </span>
+                    {/* 📅 CALENDAR + EVENT TYPE + TITLE */}
+                    <div className="mx-auto mb-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:items-center sm:gap-6">
+                        {/* Calendar-style date + event type */}
+                        <div className="flex flex-col items-center">
+                            {(() => {
+                                const date = new Date(post.date);
+                                const day = date.toLocaleString('en-US', {
+                                    day: '2-digit',
+                                });
+                                const month = date.toLocaleString('en-US', {
+                                    month: 'short',
+                                });
+                                const year = date.getFullYear();
+                                const now = new Date();
+
+                                const isToday =
+                                    date.toDateString() === now.toDateString();
+                                const isUpcoming = date > now;
+                                const color = isToday
+                                    ? 'bg-green-600'
+                                    : isUpcoming
+                                      ? 'bg-yellow-500'
+                                      : 'bg-red-700';
+
+                                return (
+                                    <div className="flex flex-col items-center">
+                                        {/* Calendar Box */}
+                                        <div className="w-24 overflow-hidden rounded-t-lg bg-white text-center shadow-md sm:w-28">
+                                            <div
+                                                className={`${color} py-1 text-xs font-bold text-white uppercase`}
+                                            >
+                                                {month}
+                                            </div>
+                                            <div className="bg-white py-2">
+                                                <div className="text-2xl leading-none font-extrabold text-gray-800">
+                                                    {day}
+                                                </div>
+                                                <div className="text-[10px] text-gray-500">
+                                                    {year}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Event type tag (same width, same border radius bottom) */}
+                                        <div className="w-24 rounded-b-lg bg-red-700/90 py-1 text-center text-[10px] font-semibold tracking-widest text-white uppercase shadow-md sm:w-28">
+                                            {post.type === 'news'
+                                                ? 'News & Updates'
+                                                : 'Event'}
+                                        </div>
+                                    </div>
+                                );
+                            })()}
                         </div>
-                    </div>
 
-                    {/* Calendar Card */}
-                    {(() => {
-                        const date = new Date(post.date);
-                        const day = date.toLocaleString('en-US', {
-                            day: '2-digit',
-                        });
-                        const month = date.toLocaleString('en-US', {
-                            month: 'short',
-                        });
-                        const year = date.getFullYear();
-                        const now = new Date();
-
-                        const isToday =
-                            date.toDateString() === now.toDateString();
-                        const isUpcoming = date > now;
-                        const color = isToday
-                            ? 'bg-green-600'
-                            : isUpcoming
-                              ? 'bg-yellow-500'
-                              : 'bg-red-700';
-
-                        return (
-                            <div className="absolute -bottom-40 w-28 flex-col overflow-hidden rounded-xl bg-white text-center shadow-2xl sm:w-32">
-                                <div
-                                    className={`${color} py-2 text-sm font-bold tracking-widest text-white uppercase`}
-                                >
-                                    {month}
-                                </div>
-                                <div className="bg-white py-3">
-                                    <div className="text-5xl leading-none font-extrabold text-gray-800">
-                                        {day}
-                                    </div>
-                                    <div className="mt-1 text-xs text-gray-500">
-                                        {year}
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })()}
-                </div>
-
-                {/* Content Section */}
-                <div className="mx-auto max-w-4xl px-6 py-20 pt-50 text-center">
-                    <div className="prose prose-lg mx-auto max-w-none text-gray-700">
-                        <h1 className="max-w-4xl p-2 text-2xl leading-tight font-bold text-red-900 drop-shadow-lg text-shadow-lg md:text-5xl">
+                        {/* Title beside it */}
+                        <h2 className="max-w-2xl text-center text-xl font-bold text-gray-800 sm:text-left sm:text-2xl">
                             {post.title}
-                        </h1>
-                        <p className="mb-8 leading-relaxed">
-                            {post.description}
-                        </p>
+                        </h2>
                     </div>
 
+                    {/* 📝 Description */}
+                    <div
+                        className="prose prose-lg mx-auto max-w-none text-gray-700"
+                        dangerouslySetInnerHTML={{
+                            __html: post.description,
+                        }}
+                    />
+
+                    {/* 🔙 Back Button */}
                     <Link
                         href={`/posts/${post.type}`}
                         className="inline-flex items-center gap-2 rounded-full bg-red-700 px-5 py-2 text-sm font-medium text-white shadow-md transition-all hover:bg-red-800 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none"

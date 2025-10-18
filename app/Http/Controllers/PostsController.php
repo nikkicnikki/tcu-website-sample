@@ -17,7 +17,20 @@ class PostsController extends Controller
                 'title' => 'Mechanical Engineering Licensure Examination Passers',
                 'date' => '2025-11-10',
                 'tag' => 'Passers',
-                'description' => 'The City of Taguig expresses its pride and congratulations to the four graduates from Taguig City University who successfully passed the August 2025 Licensure Examination for Mechanical Engineering.',
+                'description' => 'The City of Taguig expresses its pride and congratulations to the four graduates from Taguig City University who successfully passed the August 2025 Licensure Examination for Mechanical Engineering.
+                <img src="/storage/images/jobfair.jpg" alt="Job Fair" />   
+                <ul>
+            <li>Resume building workshop</li>
+            <li>Mock interviews</li>
+            <li>Networking sessions</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+        </ul>
+                ',
                 'image' => '/storage/images/engexampass.jpg',
             ],
 
@@ -55,9 +68,21 @@ class PostsController extends Controller
                 'type' => 'event',
                 'slug' => 'job-fair-2025',
                 'title' => 'Job Fair 2025',
-                'date' => '2025-12-15',
+                'date' => '2025-10-18',
                 'tag' => 'Career Development',
-                'description' => 'Meet recruiters and explore career opportunities for graduating students.',
+                'description' => '<p>Meet recruiters and explore career opportunities for graduating students.</p>
+                <img src="/storage/images/jobfair.jpg" alt="Job Fair" />
+        <ul>
+            <li>Resume building workshop</li>
+            <li>Mock interviews</li>
+            <li>Networking sessions</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+        </ul>',
                 'image' => '/storage/images/jobfair.jpg',
             ],
             [
@@ -140,7 +165,20 @@ class PostsController extends Controller
                 'title' => 'Mechanical Engineering Licensure Examination Passers',
                 'date' => '2025-11-10',
                 'tag' => 'Passers',
-                'description' => 'The City of Taguig expresses its pride and congratulations to the four graduates from Taguig City University who successfully passed the August 2025 Licensure Examination for Mechanical Engineering.',
+                'description' => 'The City of Taguig expresses its pride and congratulations to the four graduates from Taguig City University who successfully passed the August 2025 Licensure Examination for Mechanical Engineering.
+                <img src="/storage/images/jobfair.jpg" alt="Job Fair" />
+                <ul>
+            <li>Resume building workshop</li>
+            <li>Mock interviews</li>
+            <li>Networking sessions</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+        </ul>
+                ',
                 'image' => '/storage/images/engexampass.jpg',
             ],
             [
@@ -176,9 +214,21 @@ class PostsController extends Controller
                 'type' => 'event',
                 'slug' => 'job-fair-2025',
                 'title' => 'Job Fair 2025',
-                'date' => '2025-12-15',
+                'date' => '2025-10-18',
                 'tag' => 'Career Development',
-                'description' => 'Meet recruiters and explore career opportunities for graduating students.',
+                'description' => '<p>Meet recruiters and explore career opportunities for graduating students.</p>
+                <img src="/storage/images/jobfair.jpg" alt="Job Fair" />
+        <ul>
+            <li>Resume building workshop</li>
+            <li>Mock interviews</li>
+            <li>Networking sessions</li>
+                        <li>Mock interviews</li>
+                                    <li>Mock interviews</li>
+                                                <li>Mock interviews</li>
+                                                            <li>Mock interviews</li>
+                                                                        <li>Mock interviews</li>
+                                                                                    <li>Mock interviews</li>
+        </ul>',
                 'image' => '/storage/images/jobfair.jpg',
             ],
             [
@@ -267,7 +317,20 @@ class PostsController extends Controller
                 'title' => 'Mechanical Engineering Licensure Examination Passers',
                 'date' => '2025-11-10',
                 'tag' => 'Passers',
-                'description' => 'The City of Taguig expresses its pride and congratulations to the four graduates from Taguig City University who successfully passed the August 2025 Licensure Examination for Mechanical Engineering.',
+                'description' => 'The City of Taguig expresses its pride and congratulations to the four graduates from Taguig City University who successfully passed the August 2025 Licensure Examination for Mechanical Engineering.
+                <img src="/storage/images/jobfair.jpg" alt="Job Fair" />
+                <ul>
+            <li>Resume building workshop</li>
+            <li>Mock interviews</li>
+            <li>Networking sessions</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+            <li>Resume building workshop</li>
+        </ul>
+                ',
                 'image' => '/storage/images/engexampass.jpg',
             ],
 
@@ -305,9 +368,21 @@ class PostsController extends Controller
                 'type' => 'event',
                 'slug' => 'job-fair-2025',
                 'title' => 'Job Fair 2025',
-                'date' => '2025-12-15',
+                'date' => '2025-10-18',
                 'tag' => 'Career Development',
-                'description' => 'Meet recruiters and explore career opportunities for graduating students.',
+                'description' => '<p>Meet recruiters and explore career opportunities for graduating students.</p>
+                <img src="/storage/images/jobfair.jpg" alt="Job Fair" />
+        <ul>
+            <li>Resume building workshop</li>
+            <li>Mock interviews</li>
+            <li>Networking sessions</li>
+                        <li>Networking sessions</li>
+                                    <li>Networking sessions</li>
+                                                <li>Networking sessions</li>
+                                                            <li>Networking sessions</li>
+                                                                        <li>Networking sessions</li>
+                                                                                    <li>Networking sessions</li>
+        </ul>',
                 'image' => '/storage/images/jobfair.jpg',
             ],
             [

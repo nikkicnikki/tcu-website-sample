@@ -168,13 +168,26 @@ export default function CampusLife() {
                                             </div>
 
                                             <div className="p-4">
+                                                {/* Title */}
                                                 <h2 className="text-lg font-bold text-gray-800">
                                                     {post.title}
                                                 </h2>
-                                                <p className="mt-1 line-clamp-3 text-sm text-gray-500">
-                                                    {post.description}
-                                                </p>
-                                                <p className="mt-2 text-sm font-medium text-red-700">
+
+                                                {/* Description with HTML and line clamp */}
+                                                <div
+                                                    className="prose prose-sm prose-invert max-w-none [&_img]:hidden"
+                                                    dangerouslySetInnerHTML={{
+                                                        __html:
+                                                            post.description
+                                                                .split(' ')
+                                                                .slice(0, 50)
+                                                                .join(' ') +
+                                                            '...',
+                                                    }}
+                                                />
+
+                                                {/* View link */}
+                                                <p className="mt-2 text-sm font-medium text-red-700 hover:underline">
                                                     View →
                                                 </p>
                                             </div>

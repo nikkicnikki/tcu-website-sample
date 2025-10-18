@@ -1610,25 +1610,35 @@ export default function Sample1() {
                             {/* 📰 Main Featured News */}
                             {activeNews && (
                                 <a
-                                    href={activeNews.link}
-                                    className="relative block overflow-hidden shadow-lg lg:col-span-2"
+                                    href={`/posts/news/${activeNews.slug}`}
+                                    className="group relative z-10 block overflow-hidden shadow-lg lg:col-span-2"
                                 >
+                                    {/* Featured Image */}
                                     <img
                                         src={activeNews.image}
                                         alt={activeNews.title}
-                                        className="h-[360px] w-full object-cover transition-all duration-700 ease-in-out"
+                                        className="h-[360px] w-full object-cover transition-all duration-700 ease-in-out group-hover:scale-[1.02]"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                                    <div className="absolute right-0 bottom-0 left-0 p-5 text-white">
-                                        <span className="mb-2 inline-block rounded-full bg-red-600 px-3 py-1 text-[10px] font-semibold tracking-wide uppercase">
+
+                                    {/* Dark Gradient Overlay */}
+                                    <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+
+                                    {/* Overlay Content */}
+                                    <div className="absolute inset-x-0 bottom-0 z-20 p-6 text-white">
+                                        <span className="mb-2 inline-block rounded-full bg-red-700/90 px-3 py-1 text-[10px] font-semibold tracking-wide uppercase shadow-md">
                                             {activeNews.tag}
                                         </span>
-                                        <h3 className="text-xl font-bold">
+
+                                        <h3 className="text-xl leading-tight font-bold">
                                             {activeNews.title}
                                         </h3>
-                                        <p className="mt-2 text-sm text-gray-200">
-                                            {activeNews.description}
-                                        </p>
+
+                                        <div
+                                            className="mt-2 line-clamp-3 max-w-2xl text-sm text-gray-200 [&_img]:hidden"
+                                            dangerouslySetInnerHTML={{
+                                                __html: activeNews.description,
+                                            }}
+                                        />
                                     </div>
                                 </a>
                             )}
@@ -1852,7 +1862,7 @@ export default function Sample1() {
                                                     <a
                                                         key={idx}
                                                         href={`/posts/event/${event.slug}`}
-                                                        className="group relative block overflow-hidden rounded-lg shadow-xl transition-all duration-500 hover:scale-[1.01]"
+                                                        className="group relative block overflow-hidden shadow-xl transition-all duration-500 hover:scale-[1.01]"
                                                     >
                                                         {/* Background image */}
                                                         <img
@@ -1900,14 +1910,32 @@ export default function Sample1() {
 
                                                         {/* ✨ Event Details */}
                                                         <div className="absolute bottom-0 w-full p-6 text-white">
-                                                            <h3 className="mb-2 bg-gradient-to-r from-red-700/80 to-transparent px-2 py-1 text-2xl font-bold shadow-md backdrop-blur-sm">
+                                                            {/* Event Title */}
+                                                            <h3 className="mb-2 bg-gradient-to-r from-red-700/80 to-transparent px-3 py-1 text-2xl font-bold shadow-md backdrop-blur-sm">
                                                                 {event.title}
                                                             </h3>
-                                                            <p className="mb-3 line-clamp-2 max-w-3xl bg-gradient-to-r from-black/70 to-transparent px-3 text-sm text-gray-200 backdrop-blur-sm">
-                                                                {
-                                                                    event.description
-                                                                }
-                                                            </p>
+
+                                                            {/* Description (HTML Support) */}
+                                                            <div
+                                                                className="prose prose-sm prose-invert max-w-none [&_img]:hidden"
+                                                                dangerouslySetInnerHTML={{
+                                                                    __html:
+                                                                        event.description
+                                                                            .split(
+                                                                                ' ',
+                                                                            )
+                                                                            .slice(
+                                                                                0,
+                                                                                40,
+                                                                            )
+                                                                            .join(
+                                                                                ' ',
+                                                                            ) +
+                                                                        '...',
+                                                                }}
+                                                            />
+
+                                                            {/* Tag */}
                                                             {event.tag && (
                                                                 <span className="inline-block rounded-sm bg-red-700 px-3 py-1 text-xs font-semibold text-white uppercase shadow-md">
                                                                     {event.tag}
