@@ -137,7 +137,7 @@ class PostsController extends Controller
                 'date' => '2024-03-12',
                 'tag' => 'Community Engagement',
                 'description' => 'Student and faculty extended help to nearby communities through outreach programs.',
-                'image' => '/storage/images/outreach.jpg',
+                'image' => '/storage/images/outreach.JPG',
             ],
             [
                 'type' => 'event',
@@ -283,7 +283,7 @@ class PostsController extends Controller
                 'date' => '2024-03-12',
                 'tag' => 'Community Engagement',
                 'description' => 'Student and faculty extended help to nearby communities through outreach programs.',
-                'image' => '/storage/images/outreach.jpg',
+                'image' => '/storage/images/outreach.JPG',
             ],
             [
                 'type' => 'event',
@@ -437,7 +437,7 @@ class PostsController extends Controller
                 'date' => '2024-03-12',
                 'tag' => 'Community Engagement',
                 'description' => 'Student and faculty extended help to nearby communities through outreach programs.',
-                'image' => '/storage/images/outreach.jpg',
+                'image' => '/storage/images/outreach.JPG',
             ],
             [
                 'type' => 'event',
